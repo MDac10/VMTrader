@@ -64,7 +64,7 @@ public class MainUI extends JFrame implements ActionListener {
 	private MainUI() {
 
 		// Set window title
-		super("Crypto Trading Tool");
+		super("Trader");
 
 		// Set top bar
 
@@ -179,6 +179,8 @@ public class MainUI extends JFrame implements ActionListener {
 		frame.setVisible(true);
 	}
 
+	//When "Perform Trade" is clicked then the items input into the table will be separated into their respective parts
+	//The client info collected and separated will be put into a new object which can be accessed by another function
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
@@ -202,6 +204,8 @@ public class MainUI extends JFrame implements ActionListener {
 						return;
 					}
 					String strategyName = strategyObject.toString();
+					//Put the values collected from the table into an object that can be accessed by other functions
+					
 					System.out.println(traderName + " " + Arrays.toString(coinNames) + " " + strategyName);
 	        }
 			stats.removeAll();
