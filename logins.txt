@@ -5,8 +5,8 @@ megan,dac
 vito,wong
 xiao,bona
 ingrid,sin
-megalicious, 0000
-xgb, capycoder
-vitow, 4200
-ingrid, 2212love
-csstudent, 3331fan
+megalicious,0000
+xgb,capycoder
+vitow,4200
+ingrid,2212love
+csstudent,3331fan
