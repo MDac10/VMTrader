@@ -202,6 +202,7 @@ public class MainUI extends JFrame implements ActionListener {
 						return;
 					}
 					String strategyName = strategyObject.toString();
+				//instead of a print out of the data items, they should be implemented into an object[] each and then added to an object[][] table
 					System.out.println(traderName + " " + Arrays.toString(coinNames) + " " + strategyName);
 	        }
 			stats.removeAll();
