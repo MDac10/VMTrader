@@ -28,6 +28,7 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
 import cryptoTrader.gui.MainUI;
+import cryptoTrader.gui.NewUI;
 
 public class DataVisualizationCreator {
 	
@@ -62,21 +63,35 @@ public class DataVisualizationCreator {
 		// Dummy dates for demo purposes. These should come from selection menu
 		Object[] columnNames = {"Trader","Strategy","CryptoCoin","Action","Quantity","Price","Date"};
 		
+		Object[][] rawData = NewUI.getInstance().getClientInfo();
+		
+		for(int i = 0; i < NewUI.getInstance().getNumRows(); i++) {
+			Object brokerName = rawData[i][0];
+			Object strategyName = rawData[i][2];
+			String[] coinName = rawData[i][1].toString().split(","); 
+			for(int j = 0; j < Array.getLength(coinName); j++) {
+				Object currCoin = coinName[j];
+			}
+			
+		}
+		
+		Object[][] data = {};
+		
 		// Dummy data for demo purposes. These should come from actual fetcher
-		Object[][] data = {
-				{"Trader-1", "Strategy-A", "ETH", "Buy", "500", "150.3","13-January-2022"},
-				{"Trader-2", "Strategy-B", "BTC", "Sell", "200", "50.2","13-January-2022"},
-				{"Trader-3", "Strategy-C", "USDT", "Buy", "1000", "2.59","15-January-2022"},
-				{"Trader-1", "Strategy-A", "USDC", "Buy", "500", "150.3","16-January-2022"},
-				{"Trader-2", "Strategy-B", "ADA", "Sell", "200", "50.2","16-January-2022"},
-				{"Trader-3", "Strategy-C", "SOL", "Buy", "1000", "2.59","17-January-2022"},
-				{"Trader-1", "Strategy-A", "ONE", "Buy", "500", "150.3","17-January-2022"},
-				{"Trader-2", "Strategy-B", "MANA", "Sell", "200", "50.2","17-January-2022"},
-				{"Trader-3", "Strategy-C", "AVAX", "Buy", "1000", "2.59","19-January-2022"},
-				{"Trader-1", "Strategy-A", "LUNA", "Buy", "500", "150.3","19-January-2022"},
-				{"Trader-2", "Strategy-B", "FTM", "Sell", "200", "50.2","19-January-2022"},
-				{"Trader-3", "Strategy-C", "HNT", "Buy", "1000", "2.59","20-January-2022"}
-		};
+		//Object[][] data = {
+				//{"Trader-1", "Strategy-A", "ETH", "Buy", "500", "150.3","13-January-2022"},
+				//{"Trader-2", "Strategy-B", "BTC", "Sell", "200", "50.2","13-January-2022"},
+				//{"Trader-3", "Strategy-C", "USDT", "Buy", "1000", "2.59","15-January-2022"},
+				//{"Trader-1", "Strategy-A", "USDC", "Buy", "500", "150.3","16-January-2022"},
+				//{"Trader-2", "Strategy-B", "ADA", "Sell", "200", "50.2","16-January-2022"},
+				//{"Trader-3", "Strategy-C", "SOL", "Buy", "1000", "2.59","17-January-2022"},
+				//{"Trader-1", "Strategy-A", "ONE", "Buy", "500", "150.3","17-January-2022"},
+				//{"Trader-2", "Strategy-B", "MANA", "Sell", "200", "50.2","17-January-2022"},
+				//{"Trader-3", "Strategy-C", "AVAX", "Buy", "1000", "2.59","19-January-2022"},
+				//{"Trader-1", "Strategy-A", "LUNA", "Buy", "500", "150.3","19-January-2022"},
+				//{"Trader-2", "Strategy-B", "FTM", "Sell", "200", "50.2","19-January-2022"},
+				//{"Trader-3", "Strategy-C", "HNT", "Buy", "1000", "2.59","20-January-2022"}
+		//};
 		
 
 		JTable table = new JTable(data, columnNames);
@@ -93,7 +108,8 @@ public class DataVisualizationCreator {
 		scrollPane.setPreferredSize(new Dimension(800, 300));
 		table.setFillsViewportHeight(true);;
 		
-		MainUI.getInstance().updateStats(scrollPane);
+		//MainUI.getInstance().updateStats(scrollPane);
+		NewUI.getInstance().updateStats(scrollPane);
 	}
 
 	private void createTimeSeries() {
@@ -144,7 +160,8 @@ public class DataVisualizationCreator {
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		chartPanel.setBackground(Color.white);
 		
-		MainUI.getInstance().updateStats(chartPanel);
+		//MainUI.getInstance().updateStats(chartPanel);
+		NewUI.getInstance().updateStats(scrollPane);
 	}
 	
 	private void createScatter() {
@@ -193,7 +210,9 @@ public class DataVisualizationCreator {
 		chartPanel.setPreferredSize(new Dimension(600, 300));
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		chartPanel.setBackground(Color.white);
-		MainUI.getInstance().updateStats(chartPanel);
+		
+		//MainUI.getInstance().updateStats(chartPanel);
+		NewUI.getInstance().updateStats(scrollPane);
 	}
 	
 	private void createBar() {
@@ -228,7 +247,9 @@ public class DataVisualizationCreator {
 		chartPanel.setPreferredSize(new Dimension(600, 300));
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		chartPanel.setBackground(Color.white);
-		MainUI.getInstance().updateStats(chartPanel);
+		
+		//MainUI.getInstance().updateStats(chartPanel);
+		NewUI.getInstance().updateStats(scrollPane);
 	}
 
 }
