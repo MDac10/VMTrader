@@ -34,7 +34,7 @@ public class LoginUI extends JFrame implements ActionListener{
 	
 	/**
 	 * @return - an instance of the LoginUI page**/
-	public static LoginUI getLogInstance() {
+	public static LoginUI getInstance() {
 		if (instanceLogin == null)
 			instanceLogin = new LoginUI();
 
@@ -96,7 +96,7 @@ public class LoginUI extends JFrame implements ActionListener{
 	}
 	
 	public static void main(String[] args) {
-		JFrame frame = LoginUI.getLogInstance();
+		JFrame frame = LoginUI.getInstance();
 		frame.setSize(900, 600);
 		frame.pack();
 		frame.setVisible(true);
