@@ -85,7 +85,7 @@ public class LoginUI extends JFrame implements ActionListener{
 		
 		//Show password
 		showPass = new JCheckBox("Show Password");
-		showPass.setBounds(300, 325, 100, 40);
+		showPass.setBounds(300, 325, 130, 40);
 		showPass.addActionListener(this); //if check box is checked its action listener is called
 		panel.add(showPass);
 		
