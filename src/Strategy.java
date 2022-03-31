@@ -6,7 +6,9 @@ import cryptoTrader.gui.MainUI;
 import cryptoTrader.gui.NewUI;
 
 public class Strategy {
-	private String action;
+	private String[] actions;
+	private String[] quantities;
+	private double[] prices;
 	
 	public Strategy(Object name, Object strategy, String[] coins) {
 		String date = NewUI.getInstance().getDate();
@@ -15,6 +17,7 @@ public class Strategy {
 		for(int i = 0; i < Array.getLength(coins); i++) {
 			String currCoin = coins[i];
 			double price = data.getPriceForCoin(currCoin, date);
+			prices[i] = price;
 			
 			if(strategy.equals("Strategy-A")) {
 			
@@ -35,8 +38,17 @@ public class Strategy {
 		return null;
 	}
 	
-	public String getAction() {
-		return action;
+	public String[] getActions() {
+		return actions;
+	}
+
+	public String[] getQuants() {
+		return quantities;
+	}
+
+	public double[] getPrices() {
+		return prices;
 	}
 
 }
+
