@@ -20,6 +20,7 @@ public class DateFormat extends AbstractFormatter{
 	private String datePatern = "dd/MM/yyyy";
 	private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePatern);
 	
+	
 	@Override
 	public Object stringToValue(String text) throws ParseException {
 		
@@ -27,6 +28,7 @@ public class DateFormat extends AbstractFormatter{
 		
 	}
 
+	//formats the selected date from the dat picker
 	@Override
 	public String valueToString(Object value) throws ParseException {
 
