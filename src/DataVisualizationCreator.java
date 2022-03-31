@@ -3,6 +3,7 @@ package cryptoTrader.utils;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.lang.reflect.Array;
 
 import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
@@ -63,45 +64,32 @@ public class DataVisualizationCreator {
 		// Dummy dates for demo purposes. These should come from selection menu
 		Object[] columnNames = {"Trader","Strategy","CryptoCoin","Action","Quantity","Price","Date"};
 		
-		Object[][] rawData = NewUI.getInstance().getClientInfo();
-		String date = NewUI.getInstance().getDate();
-		
-		int counter = 0;
+		TraderActions ta = new TraderActions();
 		Object[][] data = {};
+		//Object[][] data = ta.clientInfoTable();
 		
-		for(int i = 0; i < NewUI.getInstance().getNumRows(); i++) {
-			Object brokerName = rawData[i][0];
-			Object strategyName = rawData[i][2];
-			String[] coinName = rawData[i][1].toString().split(","); 
-			Strategy strat = new Strategy(brokerName, strategyName, coinName);
-			String[] actions = strat.getActions();
-			String[] quantities = strat.getQuants();
-			double[] prices = strat.getPrices();
+		//Object[][] rawData = NewUI.getInstance().getClientInfo();
+		//String date = NewUI.getInstance().getDate();
+		
+		//int counter = 0;
+		//Object[][] data = {};
+		
+		//for(int i = 0; i < NewUI.getInstance().getNumRows(); i++) {
+			//Object brokerName = rawData[i][0];
+			//Object strategyName = rawData[i][2];
+			//String[] coinName = rawData[i][1].toString().split(","); 
+			//Strategy strat = new Strategy(brokerName, strategyName, coinName);
+			//String[] actions = strat.getActions();
+			//double[] quantities = strat.getQuants();
+			//double[] prices = strat.getPrices();
 			
-			for(int j = 0; j < Array.getLength(coinName); j++) {
-				counter++;
-				Object currCoin = coinName[j];
+			//for(int j = 0; j < Array.getLength(coinName); j++) {
+				//counter++;
+				//Object currCoin = coinName[j];
 				
-			}
+			//}
 			
-		}
-		
-		// Dummy data for demo purposes. These should come from actual fetcher
-		//Object[][] data = {
-				//{"Trader-1", "Strategy-A", "ETH", "Buy", "500", "150.3","13-January-2022"},
-				//{"Trader-2", "Strategy-B", "BTC", "Sell", "200", "50.2","13-January-2022"},
-				//{"Trader-3", "Strategy-C", "USDT", "Buy", "1000", "2.59","15-January-2022"},
-				//{"Trader-1", "Strategy-A", "USDC", "Buy", "500", "150.3","16-January-2022"},
-				//{"Trader-2", "Strategy-B", "ADA", "Sell", "200", "50.2","16-January-2022"},
-				//{"Trader-3", "Strategy-C", "SOL", "Buy", "1000", "2.59","17-January-2022"},
-				//{"Trader-1", "Strategy-A", "ONE", "Buy", "500", "150.3","17-January-2022"},
-				//{"Trader-2", "Strategy-B", "MANA", "Sell", "200", "50.2","17-January-2022"},
-				//{"Trader-3", "Strategy-C", "AVAX", "Buy", "1000", "2.59","19-January-2022"},
-				//{"Trader-1", "Strategy-A", "LUNA", "Buy", "500", "150.3","19-January-2022"},
-				//{"Trader-2", "Strategy-B", "FTM", "Sell", "200", "50.2","19-January-2022"},
-				//{"Trader-3", "Strategy-C", "HNT", "Buy", "1000", "2.59","20-January-2022"}
-		//};
-		
+		//}
 
 		JTable table = new JTable(data, columnNames);
 		//table.setPreferredSize(new Dimension(600, 300));
@@ -170,7 +158,7 @@ public class DataVisualizationCreator {
 		chartPanel.setBackground(Color.white);
 		
 		//MainUI.getInstance().updateStats(chartPanel);
-		NewUI.getInstance().updateStats(scrollPane);
+		NewUI.getInstance().updateStats(chartPanel);
 	}
 	
 	private void createScatter() {
@@ -221,7 +209,7 @@ public class DataVisualizationCreator {
 		chartPanel.setBackground(Color.white);
 		
 		//MainUI.getInstance().updateStats(chartPanel);
-		NewUI.getInstance().updateStats(scrollPane);
+		NewUI.getInstance().updateStats(chartPanel);
 	}
 	
 	private void createBar() {
@@ -246,8 +234,8 @@ public class DataVisualizationCreator {
 		rangeAxis.setRange(new Range(1.0, 20.0));
 		plot.setRangeAxis(rangeAxis);
 
-		//plot.mapDatasetToRangeAxis(0, 0);// 1st dataset to 1st y-axis
-		//plot.mapDatasetToRangeAxis(1, 1); // 2nd dataset to 2nd y-axis
+		plot.mapDatasetToRangeAxis(0, 0);// 1st dataset to 1st y-axis
+		plot.mapDatasetToRangeAxis(1, 1); // 2nd dataset to 2nd y-axis
 
 		JFreeChart barChart = new JFreeChart("Actions Performed By Traders So Far", new Font("Serif", java.awt.Font.BOLD, 18), plot,
 				true);
@@ -258,7 +246,7 @@ public class DataVisualizationCreator {
 		chartPanel.setBackground(Color.white);
 		
 		//MainUI.getInstance().updateStats(chartPanel);
-		NewUI.getInstance().updateStats(scrollPane);
+		NewUI.getInstance().updateStats(chartPanel);
 	}
 
 }
