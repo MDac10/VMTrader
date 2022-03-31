@@ -21,7 +21,6 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -38,7 +37,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import cryptoTrader.utils.DataVisualizationCreator;
-//import cryptoTrader.utils.AbstractFormatter;
+import cryptoTrader.utils.DateFormat;
 
 public class NewUI extends JFrame implements ActionListener{
 
@@ -64,9 +63,6 @@ public class NewUI extends JFrame implements ActionListener{
 	
 	private static Object[][] clientInfo;
 	private static int numRows;
-	
-	private String datePatern = "dd/MM/yyyy";
-	private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePatern);
 
 	public static NewUI getInstance() {
 		if (instance == null)
@@ -88,41 +84,24 @@ public class NewUI extends JFrame implements ActionListener{
 //		north.add(strategyList);
 
 		// Set bottom bar
-		JLabel from = new JLabel("From");
+		JLabel from = new JLabel("From: ");
 		UtilDateModel dateModel = new UtilDateModel();
 		Properties p = new Properties();
 		p.put("text.today", "Today");
 		p.put("text.month", "Month");
 		p.put("text.year", "Year");
 		JDatePanelImpl datePanel = new JDatePanelImpl(dateModel, p);
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateFormat());
 		
-//		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new AbstractFormatter());
-//		@SuppressWarnings("serial")
-//		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new AbstractFormatter() {
-//			private String datePatern = "dd/MM/yyyy";
-//
-//			private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePatern);
-//
-//			@Override
-//			public Object stringToValue(String text) throws ParseException {
-//				return dateFormatter.parseObject(text);
-//			}
-//
-//			@Override
-//			public String valueToString(Object value) throws ParseException {
-//				if (value != null) {
-//					Calendar cal = (Calendar) value;
-//					return dateFormatter.format(cal.getTime());
-//				}
-//
-//				return "";
-//			}
-//		});
+		//Creates a date panel for the user to select their date of interest for trades
+		JPanel date = new JPanel();
+		date.setLayout(new BoxLayout(date, BoxLayout.X_AXIS));
+		date.add(from);
+		date.add(datePicker);
 
 		JButton trade = new JButton("Perform Trade");
 		trade.setActionCommand("trade");
 		trade.addActionListener(this);
-
 
 
 		JPanel south = new JPanel();
@@ -164,6 +143,7 @@ public class NewUI extends JFrame implements ActionListener{
 		buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
 		buttons.add(addRow);
 		buttons.add(remRow);
+		east.add(date);
 		east.add(buttons);
 //		east.add(selectedTickerListLabel);
 //		east.add(selectedTickersScrollPane);
