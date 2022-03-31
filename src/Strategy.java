@@ -7,7 +7,7 @@ import cryptoTrader.gui.NewUI;
 
 public class Strategy {
 	private String[] actions;
-	private String[] quantities;
+	private double[] quantities;
 	private double[] prices;
 	
 	public Strategy(Object name, Object strategy, String[] coins) {
@@ -18,31 +18,39 @@ public class Strategy {
 			String currCoin = coins[i];
 			double price = data.getPriceForCoin(currCoin, date);
 			prices[i] = price;
+		}
 			
 			if(strategy.equals("Strategy-A")) {
+				StrategyA sa = new StrategyA();
+				sa.trade(coins, prices);
 			
 			}else if(strategy.equals("Strategy-B")) {
+				StrategyB sb = new StrategyB();
+				sb.trade(coins, prices);
 			
 			}else if(strategy.equals("Strategy-C")) {
+				StrategyC sc = new StrategyC();
+				sc.trade(coins, prices);
 			
 			}else if(strategy.equals("Strategy-D")) {
+				StrategyD sd = new StrategyD();
+				sd.trade(coins, prices);
 			
 			}else {
-			
+				//Default (strategy is "None") means that no trades will occur so the broker will have 0 quantity of specified coins
+				for(int i = 0; i < Array.getLength(coins); i++) {
+					quantities[i] = 0;
+				}
+				
 			}
-		}
 		
-	}
-	
-	public TradeResult trade(String[] coinList, String[] coinPriceList) {
-		return null;
 	}
 	
 	public String[] getActions() {
 		return actions;
 	}
 
-	public String[] getQuants() {
+	public double[] getQuants() {
 		return quantities;
 	}
 
@@ -51,4 +59,3 @@ public class Strategy {
 	}
 
 }
-
