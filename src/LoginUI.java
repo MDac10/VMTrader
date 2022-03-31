@@ -97,6 +97,7 @@ public class LoginUI extends JFrame implements ActionListener{
 	
 	public static void main(String[] args) {
 		JFrame frame = LoginUI.getInstance();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(900, 600);
 		frame.pack();
 		frame.setVisible(true);
@@ -152,7 +153,8 @@ public class LoginUI extends JFrame implements ActionListener{
 				JOptionPane.showMessageDialog(this, "Login successful...");
 				
 				//Opens MainUI on a successful login
-				JFrame homeframe = MainUI.getInstance();
+				//JFrame homeframe = MainUI.getInstance();
+				JFrame homeframe = NewUI.getInstance();
 				homeframe.setSize(900, 600);
 				homeframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				homeframe.pack();
