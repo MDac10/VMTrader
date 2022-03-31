@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,6 +64,8 @@ public class NewUI extends JFrame implements ActionListener{
 	
 	private static Object[][] clientInfo;
 	private static int numRows;
+	private static String selectedDate;
+	private static JDatePickerImpl datePicker;
 
 	public static NewUI getInstance() {
 		if (instance == null)
@@ -91,7 +94,7 @@ public class NewUI extends JFrame implements ActionListener{
 		p.put("text.month", "Month");
 		p.put("text.year", "Year");
 		JDatePanelImpl datePanel = new JDatePanelImpl(dateModel, p);
-		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateFormat());
+		datePicker = new JDatePickerImpl(datePanel, new DateFormat());
 		
 		//Creates a date panel for the user to select their date of interest for trades
 		JPanel date = new JPanel();
@@ -175,6 +178,10 @@ public class NewUI extends JFrame implements ActionListener{
 	public int getNumRows() {
 		return numRows;
 	}
+	
+	public String getDate() {
+		return datePicker.getJFormattedTextField().getText();
+	}
 
 	public static void main(String[] args) {
 		JFrame frame = NewUI.getInstance();
@@ -229,6 +236,8 @@ public class NewUI extends JFrame implements ActionListener{
 					
 					System.out.println("initial: " + traderName + " " + Arrays.toString(coinNames) + " " + strategyName);
 					System.out.println("new: " + clientInfo[count][0] + " " + Arrays.toString((Object[]) clientInfo[count][1]) + " " + clientInfo[count][2]);
+					System.out.println("date: " + NewUI.getInstance().getDate());
+					
 	        }
 			
 			stats.removeAll();
