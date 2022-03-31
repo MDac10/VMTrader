@@ -64,18 +64,27 @@ public class DataVisualizationCreator {
 		Object[] columnNames = {"Trader","Strategy","CryptoCoin","Action","Quantity","Price","Date"};
 		
 		Object[][] rawData = NewUI.getInstance().getClientInfo();
+		String date = NewUI.getInstance().getDate();
+		
+		int counter = 0;
+		Object[][] data = {};
 		
 		for(int i = 0; i < NewUI.getInstance().getNumRows(); i++) {
 			Object brokerName = rawData[i][0];
 			Object strategyName = rawData[i][2];
 			String[] coinName = rawData[i][1].toString().split(","); 
+			Strategy strat = new Strategy(brokerName, strategyName, coinName);
+			String[] actions = strat.getActions();
+			String[] quantities = strat.getQuants();
+			double[] prices = strat.getPrices();
+			
 			for(int j = 0; j < Array.getLength(coinName); j++) {
+				counter++;
 				Object currCoin = coinName[j];
+				
 			}
 			
 		}
-		
-		Object[][] data = {};
 		
 		// Dummy data for demo purposes. These should come from actual fetcher
 		//Object[][] data = {
