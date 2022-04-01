@@ -1,8 +1,16 @@
 package cryptoTrader.utils;
 
-//All strategies will implement this interface when deciding their trade strategy
-public abstract class TradeResult {
+//Data structure to hold the data necessary for graphs
+public class TradeResult {
 	
-	public abstract String trade(String[] coinList, double[] coinPriceList);
+	static class Trade{
+		Object traderName;
+		int numOfStrats;
+		
+		public Trade(Object traderName, int numOfStrats) {
+			this.traderName = traderName;
+			this.numOfStrats = numOfStrats;
+		}
+	}
 
 }
