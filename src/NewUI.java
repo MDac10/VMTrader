@@ -6,10 +6,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +36,7 @@ import javax.swing.table.TableColumn;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
+import org.jfree.data.time.RegularTimePeriod;
 
 import cryptoTrader.utils.DataVisualizationCreator;
 import cryptoTrader.utils.DateFormat;
@@ -153,7 +154,7 @@ public class NewUI extends JFrame implements ActionListener{
 
 		// Set charts region
 		JPanel west = new JPanel();
-		west.setPreferredSize(new Dimension(1250, 650));
+		west.setPreferredSize(new Dimension(1250, 700));
 		stats = new JPanel();
 		stats.setLayout(new GridLayout(2, 2));
 

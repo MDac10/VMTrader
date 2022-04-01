@@ -1,19 +1,12 @@
+/**
+ * @author Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hong Ching Ingrid**/
 package cryptoTrader.utils;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.lang.reflect.Array;
-import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 
 import javax.swing.BorderFactory;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -32,105 +25,29 @@ import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import cryptoTrader.gui.MainUI;
 import cryptoTrader.gui.NewUI;
 
-public class DataVisualizationCreator {
+/**
+ * This class is meant to act as the model for Data Models in the MVC design pattern**/
+public class DataModels {
 	
-	private int day;
-	private int month;
-	private int year;
+	private int day, month, year;
 	private String date = NewUI.getInstance().getDate();
+	private ChartPanel chartPanel;
 	
-	public void createCharts() {
-//		createTextualOutput();
-		createTableOutput();
-
-		DataViewer dv = new DataViewer();
-	}
-
-	private void createTextualOutput() {
-//		DefaultTableModel dtm = new  DefaultTableModel(new Object[] {"Broker Name", "Ticker List", "Strategy Name"}, 1);
-//		JTable table = new JTable(dtm);
-//		//table.setPreferredSize(new Dimension(600, 300));
-//		dtm.e
-//		JScrollPane scrollPane = new JScrollPane(table);
-//		scrollPane.setBorder (BorderFactory.createTitledBorder (BorderFactory.createEtchedBorder (),
-//                "Broker Actions",
-//                TitledBorder.CENTER,
-//                TitledBorder.TOP));
-//		
-//	
-//		
-//		scrollPane.setPreferredSize(new Dimension(800, 300));
-//		table.setFillsViewportHeight(true);;
-		
-//		MainUI.getInstance().updateStats(scrollPane);
-	}
-	
-	private void createTableOutput() {
-		// Dummy dates for demo purposes. These should come from selection menu
-		Object[] columnNames = {"Trader","Strategy","CryptoCoin","Action","Quantity","Price","Date"};
-		
-		TraderActions ta = new TraderActions();
-		Object[][] data = {};
-		//Object[][] data = ta.clientInfoTable();
-		
-		//Object[][] rawData = NewUI.getInstance().getClientInfo();
-		//String date = NewUI.getInstance().getDate();
-		
-		//int counter = 0;
-		//Object[][] data = {};
-		
-		//for(int i = 0; i < NewUI.getInstance().getNumRows(); i++) {
-			//Object brokerName = rawData[i][0];
-			//Object strategyName = rawData[i][2];
-			//String[] coinName = rawData[i][1].toString().split(","); 
-			//Strategy strat = new Strategy(brokerName, strategyName, coinName);
-			//String[] actions = strat.getActions();
-			//double[] quantities = strat.getQuants();
-			//double[] prices = strat.getPrices();
-			
-			//for(int j = 0; j < Array.getLength(coinName); j++) {
-				//counter++;
-				//Object currCoin = coinName[j];
-				
-			//}
-			
-		//}
-
-		JTable table = new JTable(data, columnNames);
-		//table.setPreferredSize(new Dimension(600, 300));
-		
-		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBorder (BorderFactory.createTitledBorder (BorderFactory.createEtchedBorder (),
-                "Trader Actions",
-                TitledBorder.CENTER,
-                TitledBorder.TOP));
-		
-	
-		
-		scrollPane.setPreferredSize(new Dimension(800, 300));
-		table.setFillsViewportHeight(true);;
-		
-		//MainUI.getInstance().updateStats(scrollPane);
-		NewUI.getInstance().updateStats(scrollPane);
-	}
-
-	/*
-	 *uncomment above 
-	 *
-	private void createTimeSeries(){
+	/**
+	 * @return - ChartPanel with the live Time Series info for Bitcoin, Ethereum, and Cardano**/
+	public ChartPanel createTimeSeries(){
 		
 		DataFetcher df = new DataFetcher();
 		
 		TimeSeries series1 = new TimeSeries("Bitcoin - Daily");
-		series1.add(new Day(13, 9, 2022), df.getPriceForCoin("BTC", NewUI.getInstance().getDate()));
-		//series1.add(new Day(13, 9, 2021), 50368.67);
-		//series1.add(new Day(14, 9, 2021), 51552.05);
-		//series1.add(new Day(15, 9, 2021), 47228.30);
-		//series1.add(new Day(16, 9, 2021), 45263.90);
-		//series1.add(new Day(17, 9, 2021), 46955.41);
+		//series1.add(new Day(13, 9, 2022), df.getPriceForCoin("BTC", NewUI.getInstance().getDate()));
+		series1.add(new Day(13, 9, 2021), 50368.67);
+		series1.add(new Day(14, 9, 2021), 51552.05);
+		series1.add(new Day(15, 9, 2021), 47228.30);
+		series1.add(new Day(16, 9, 2021), 45263.90);
+		series1.add(new Day(17, 9, 2021), 46955.41);
 		
 		TimeSeries series2 = new TimeSeries("Ethereum - Daily");
 		series2.add(new Day(13, 9, 2021), 3912.28);
@@ -167,16 +84,17 @@ public class DataVisualizationCreator {
 		JFreeChart chart = new JFreeChart("Daily Price Line Chart", new Font("Serif", java.awt.Font.BOLD, 18), plot,
 				true);
 
-		ChartPanel chartPanel = new ChartPanel(chart);
+		chartPanel = new ChartPanel(chart);
 		chartPanel.setPreferredSize(new Dimension(800, 300));
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		chartPanel.setBackground(Color.white);
 		
-		//MainUI.getInstance().updateStats(chartPanel);
-		NewUI.getInstance().updateStats(chartPanel);
+		return chartPanel;
 	}
 	
-	private void createScatter() {
+	/**
+	 * @return - ChartPanel with the live scatter plot of the time series info for Bitcoin, Ethereum, and Cardano**/
+	public ChartPanel createScatter() {
 		TimeSeries series1 = new TimeSeries("Bitcoin - Daily");
 		series1.add(new Day(13, 9, 2021), 50368.67);
 		series1.add(new Day(14, 9, 2021), 51552.05);
@@ -218,16 +136,17 @@ public class DataVisualizationCreator {
 		JFreeChart scatterChart = new JFreeChart("Daily Price Scatter Chart",
 				new Font("Serif", java.awt.Font.BOLD, 18), plot, true);
 
-		ChartPanel chartPanel = new ChartPanel(scatterChart);
+		chartPanel = new ChartPanel(scatterChart);
 		chartPanel.setPreferredSize(new Dimension(600, 300));
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		chartPanel.setBackground(Color.white);
 		
-		//MainUI.getInstance().updateStats(chartPanel);
-		NewUI.getInstance().updateStats(chartPanel);
+		return chartPanel;
 	}
 	
-	private void createBar() {
+	/**
+	 * @return - ChartPanel with the live bar graph showing the traders actions performed**/
+	public ChartPanel createBar() {
 		
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 //		Those are hard-coded values!!!! 
@@ -255,16 +174,11 @@ public class DataVisualizationCreator {
 		JFreeChart barChart = new JFreeChart("Actions Performed By Traders So Far", new Font("Serif", java.awt.Font.BOLD, 18), plot,
 				true);
 
-		ChartPanel chartPanel = new ChartPanel(barChart);
+		chartPanel = new ChartPanel(barChart);
 		chartPanel.setPreferredSize(new Dimension(600, 300));
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		chartPanel.setBackground(Color.white);
 		
-		//MainUI.getInstance().updateStats(chartPanel);
-		NewUI.getInstance().updateStats(chartPanel);
+		return(chartPanel);
 	}
-	
-	uncomment below
-	*/
-
 }
