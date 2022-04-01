@@ -14,6 +14,8 @@ public class DataViewer extends JFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Makes the viewer portion of the MVC design pattern, allowing the live data graphs to be seen in tabs**/
 	DataViewer(){
 	
 		JTabbedPane dataPanel = new JTabbedPane();
