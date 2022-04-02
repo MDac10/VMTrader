@@ -42,7 +42,7 @@ public class DataVisualizationCreator {
 	private int year;
 	private String date = NewUI.getInstance().getDate();
 	
-	public void createCharts() {
+	public void createCharts() throws ParseException {
 //		createTextualOutput();
 		createTableOutput();
 

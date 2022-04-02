@@ -5,6 +5,10 @@ package cryptoTrader.utils;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 
@@ -31,37 +35,45 @@ import cryptoTrader.gui.NewUI;
  * This class is meant to act as the model for Data Models in the MVC design pattern**/
 public class DataModels {
 	
-	private int day, month, year;
-	private String date = NewUI.getInstance().getDate();
-	private ChartPanel chartPanel;
+	//private String ogdate = NewUI.getInstance().getDate();
+	//private ChartPanel chartPanel;
+	//private  static Date date;
+	private static DataFetcher df = new DataFetcher();
+	private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
+	private String currdate = dateformat.format(new Date());
 	
 	/**
-	 * @return - ChartPanel with the live Time Series info for Bitcoin, Ethereum, and Cardano**/
-	public ChartPanel createTimeSeries(){
+	 * @return - ChartPanel with the live Time Series info for Bitcoin, Ethereum, and Cardano
+	 * @throws ParseException 
+	 * This function may take a few seconds to run as the data being fetched must be searched several times**/
+	public ChartPanel createTimeSeries() throws ParseException{	
 		
-		DataFetcher df = new DataFetcher();
+		String ogdate = NewUI.getInstance().getDate();
+		String sdate = ogdate;
+		
+		if(ogdate.isBlank() || dateformat.parse(currdate).before(dateformat.parse(sdate))) {
+			sdate = currdate; //sets the default date as current date if nothing is selected
+		} 
+		Date date = dateformat.parse(sdate);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
 		
 		TimeSeries series1 = new TimeSeries("Bitcoin - Daily");
-		//series1.add(new Day(13, 9, 2022), df.getPriceForCoin("BTC", NewUI.getInstance().getDate()));
-		series1.add(new Day(13, 9, 2021), 50368.67);
-		series1.add(new Day(14, 9, 2021), 51552.05);
-		series1.add(new Day(15, 9, 2021), 47228.30);
-		series1.add(new Day(16, 9, 2021), 45263.90);
-		series1.add(new Day(17, 9, 2021), 46955.41);
-		
 		TimeSeries series2 = new TimeSeries("Ethereum - Daily");
-		series2.add(new Day(13, 9, 2021), 3912.28);
-		series2.add(new Day(14, 9, 2021), 3927.27);
-		series2.add(new Day(15, 9, 2021), 3460.48);
-		series2.add(new Day(16, 9, 2021), 3486.09);
-		series2.add(new Day(17, 9, 2021), 3550.29);
-
 		TimeSeries series3 = new TimeSeries("Cardano - Daily");
-		series3.add(new Day(13, 9, 2021), 2.87);
-		series3.add(new Day(14, 9, 2021), 2.84);
-		series3.add(new Day(15, 9, 2021), 2.41);
-		series3.add(new Day(16, 9, 2021), 2.43);
-		series3.add(new Day(17, 9, 2021), 2.59);
+
+		for(int i = 0; i < 5; i++) { 
+			
+			Date newdate = cal.getTime();
+			sdate = dateformat.format(newdate);
+			
+			series1.add(new Day(cal.getTime()), df.getPriceForCoin("bitcoin", sdate));
+			series2.add(new Day(cal.getTime()), df.getPriceForCoin("ethereum", sdate));
+			series3.add(new Day(cal.getTime()), df.getPriceForCoin("cardano", sdate));
+			
+			cal.add(Calendar.DATE, -1); //decrement the date
+		}
 
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
 		dataset.addSeries(series1);
@@ -84,7 +96,7 @@ public class DataModels {
 		JFreeChart chart = new JFreeChart("Daily Price Line Chart", new Font("Serif", java.awt.Font.BOLD, 18), plot,
 				true);
 
-		chartPanel = new ChartPanel(chart);
+		ChartPanel chartPanel = new ChartPanel(chart);
 		chartPanel.setPreferredSize(new Dimension(800, 300));
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		chartPanel.setBackground(Color.white);
@@ -93,28 +105,37 @@ public class DataModels {
 	}
 	
 	/**
-	 * @return - ChartPanel with the live scatter plot of the time series info for Bitcoin, Ethereum, and Cardano**/
-	public ChartPanel createScatter() {
-		TimeSeries series1 = new TimeSeries("Bitcoin - Daily");
-		series1.add(new Day(13, 9, 2021), 50368.67);
-		series1.add(new Day(14, 9, 2021), 51552.05);
-		series1.add(new Day(15, 9, 2021), 47228.30);
-		series1.add(new Day(16, 9, 2021), 45263.90);
-		series1.add(new Day(17, 9, 2021), 46955.41);
+	 * @return - ChartPanel with the live scatter plot of the time series info for Bitcoin, Ethereum, and Cardano
+	 * @throws ParseException 
+	 * This function may take a few seconds to run**/
+	public ChartPanel createScatter() throws ParseException {
 		
+		String ogdate = NewUI.getInstance().getDate();
+		String sdate = ogdate;
+		
+		if(ogdate.isBlank() || dateformat.parse(currdate).before(dateformat.parse(sdate))) {
+			sdate = currdate; //sets the default date as current date if nothing is selected
+		} 
+		Date date = dateformat.parse(sdate);
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		
+		TimeSeries series1 = new TimeSeries("Bitcoin - Daily");
 		TimeSeries series2 = new TimeSeries("Ethereum - Daily");
-		series2.add(new Day(13, 9, 2021), 3912.28);
-		series2.add(new Day(14, 9, 2021), 3927.27);
-		series2.add(new Day(15, 9, 2021), 3460.48);
-		series2.add(new Day(16, 9, 2021), 3486.09);
-		series2.add(new Day(17, 9, 2021), 3550.29);
-
 		TimeSeries series3 = new TimeSeries("Cardano - Daily");
-		series3.add(new Day(13, 9, 2021), 2.87);
-		series3.add(new Day(14, 9, 2021), 2.84);
-		series3.add(new Day(15, 9, 2021), 2.41);
-		series3.add(new Day(16, 9, 2021), 2.43);
-		series3.add(new Day(17, 9, 2021), 2.59);
+
+		for(int i = 0; i < 5; i++) { 
+			
+			Date newdate = cal.getTime();
+			sdate = new SimpleDateFormat("dd-MM-yyyy").format(newdate);
+			
+			series1.add(new Day(cal.getTime()), df.getPriceForCoin("bitcoin", sdate));
+			series2.add(new Day(cal.getTime()), df.getPriceForCoin("ethereum", sdate));
+			series3.add(new Day(cal.getTime()), df.getPriceForCoin("cardano", sdate));
+			
+			cal.add(Calendar.DATE, -1); //decrement the date
+		}
 
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
 		dataset.addSeries(series1);
@@ -128,7 +149,7 @@ public class DataModels {
 		plot.setRenderer(0, itemrenderer1);
 		DateAxis domainAxis = new DateAxis("");
 		plot.setDomainAxis(domainAxis);
-		plot.setRangeAxis(new LogAxis("Price(USD)"));
+		plot.setRangeAxis(new LogAxis("Price(CAD)"));
 
 		//plot.mapDatasetToRangeAxis(0, 0);// 1st dataset to 1st y-axis
 		//plot.mapDatasetToRangeAxis(1, 1); // 2nd dataset to 2nd y-axis
@@ -136,7 +157,7 @@ public class DataModels {
 		JFreeChart scatterChart = new JFreeChart("Daily Price Scatter Chart",
 				new Font("Serif", java.awt.Font.BOLD, 18), plot, true);
 
-		chartPanel = new ChartPanel(scatterChart);
+		ChartPanel chartPanel = new ChartPanel(scatterChart);
 		chartPanel.setPreferredSize(new Dimension(600, 300));
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		chartPanel.setBackground(Color.white);
@@ -174,7 +195,7 @@ public class DataModels {
 		JFreeChart barChart = new JFreeChart("Actions Performed By Traders So Far", new Font("Serif", java.awt.Font.BOLD, 18), plot,
 				true);
 
-		chartPanel = new ChartPanel(barChart);
+		ChartPanel chartPanel = new ChartPanel(barChart);
 		chartPanel.setPreferredSize(new Dimension(600, 300));
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		chartPanel.setBackground(Color.white);

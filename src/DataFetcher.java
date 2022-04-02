@@ -22,6 +22,7 @@ public class DataFetcher {
 			URL url = new URL(urlString);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
+			conn.addRequestProperty("Content-Type", "application/json; utf-8");
 			conn.connect();
 			int responsecode = conn.getResponseCode();
 			if (responsecode == 200) {
@@ -36,7 +37,7 @@ public class DataFetcher {
 			}
 
 		} catch (IOException e) {
-			System.out.println("Something went wrong with the API call.");
+			System.out.println("Something went wrong with the API call. " + e);
 		}
 		return null;
 	}

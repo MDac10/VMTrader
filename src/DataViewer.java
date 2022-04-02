@@ -3,6 +3,8 @@
 
 package cryptoTrader.utils;
 
+import java.text.ParseException;
+
 import javax.swing.*;
 
 import cryptoTrader.gui.NewUI;
@@ -15,8 +17,9 @@ public class DataViewer extends JFrame{
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Makes the viewer portion of the MVC design pattern, allowing the live data graphs to be seen in tabs**/
-	DataViewer(){
+	 * Makes the viewer portion of the MVC design pattern, allowing the live data graphs to be seen in tabs
+	 * @throws ParseException **/
+	DataViewer() throws ParseException{
 	
 		JTabbedPane dataPanel = new JTabbedPane();
 		
