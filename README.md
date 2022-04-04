@@ -24,6 +24,7 @@ Hence the additon of package sources at the beginning of each file.
 - Needs Windows 10 or later
 - Needs iOS most recent version
 - Eclipse should use compiler version 11
+- JavaSE-1.7
 
 ### Executing the Program
 The program can be run in two different ways:
