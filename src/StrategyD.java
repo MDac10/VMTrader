@@ -49,7 +49,7 @@ public class StrategyD extends StrategyInterface{
 		double sumOfRevCRatio = 0;	//sum of reversed ratio
 		double[] finRatio = new double[numOfCoins];		//final ratio for buy/sell
 		int[] finQty = new int[numOfCoins]; // final quantity for each coin
-		int[] action = new int[numOfCoins]; // 0 = buy, 1 = sell, 2 = hold
+		int[] action = new int[numOfCoins]; // buy, sell,  hold
 		double[] trend = new double[numOfCoins];	//slope of trends of coins
 		
 		String[] coinIDList = new String[numOfCoins];
@@ -101,18 +101,27 @@ public class StrategyD extends StrategyInterface{
 		
 		for (int i = 0; i < numOfCoins; i++) {
 			if (trend[i] < 0) {
-				action[i] = 1;
+				action[i] = "Sell";
 			}
 			else if (trend[i] > 0) {
-				action[i] = 0;
+				action[i] = "Buy";
 			}
 			
 		}
 		
+		Object[][] result;
+		TradeResult TR = new TradeResult();
+		for (int i = 0; i < numOfCoins; i++) {
+			result[i][0]= coinList[i];
+			result[i][1]= coinPriceList[i];
+			result[i][2]= action[i];
+			result[i][3]= finQty[i];
+		}
+		
+		TR.trade(numOfCoins, result);
 		
 		
-		return null;
+		return TR;
 	}
 	
 }
-
