@@ -4,7 +4,9 @@
 package cryptoTrader.utils;
 
 import java.lang.reflect.Array;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import cryptoTrader.gui.NewUI;
 
@@ -12,10 +14,12 @@ public class TraderActions {
 	
 	private Object brokerName, strategyName, currCoin, currAction, currQuant, currPrice;
 	private ArrayList<Object[]> brokerList = new ArrayList<Object[]>();
+	private String date = NewUI.getInstance().getDate();
 	
 	/**
-	 * @return **/
-	public Object[][] clientInfoTable(){
+	 * @return 
+	 * @throws ParseException **/
+	public Object[][] clientInfoTable() throws ParseException{
 		Object[][] rawData = NewUI.getInstance().getClientInfo();
 
 		Object[][] data;
@@ -23,35 +27,26 @@ public class TraderActions {
 		for(int i = 0; i < NewUI.getInstance().getNumRows(); i++) {
 			brokerName = rawData[i][0];
 			strategyName = rawData[i][2];
-			String[] coinName = rawData[i][1].toString().split(","); 
+			String[] coinName = (String[]) rawData[i][1]; 
 			Strategy strat = new Strategy(brokerName, strategyName, coinName);
-			String[] actions = strat.getActions();
-			double[] quantities = strat.getQuants();
-			double[] prices = strat.getPrices();
-			
-			for(int j = 0; j < Array.getLength(coinName); j++) {
-				currCoin = coinName[j];
-				currAction = actions[j];
-				currQuant = quantities[j];
-				currPrice = prices[j];
+			TradeResult tr = strat.getTrade();
+			Object[][] objArray = tr.getArray();
+
+			currCoin = objArray[i][0];
+			currAction = objArray[i][2];
+			currQuant = objArray[i][3];
+			currPrice = objArray[i][1];
 				
-				Object[] row = {brokerName, strategyName, currCoin, currAction, currQuant, currPrice};
-				brokerList.add(row);
-			}
+			Object[] row = {brokerName, strategyName, currCoin, currAction, currQuant, currPrice, date};
+			brokerList.add(row);
 			
 		}
 		
 		int bSize = brokerList.size();
-		data = new Object[bSize][6];
+		data = new Object[bSize][7];
 		
 		for(int i = 0; i < bSize; i++) {
 			data[i] = brokerList.get(i);
-			//data[i][0] = brokerList.get(i)[0];
-			//data[i][1] = brokerList.get(i)[1];
-			//data[i][2] = brokerList.get(i)[2];
-			//data[i][3] = brokerList.get(i)[3];
-			//data[i][4] = brokerList.get(i)[4];
-			//data[i][5] = brokerList.get(i)[5];
 		}
 		
 		return data;

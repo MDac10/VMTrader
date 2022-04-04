@@ -17,6 +17,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.LogAxis;
+import org.jfree.chart.axis.LogarithmicAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
@@ -35,12 +36,9 @@ import cryptoTrader.gui.NewUI;
  * This class is meant to act as the model for Data Models in the MVC design pattern**/
 public class DataModels {
 	
-	//private String ogdate = NewUI.getInstance().getDate();
-	//private ChartPanel chartPanel;
-	//private  static Date date;
 	private static DataFetcher df = new DataFetcher();
 	private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
-	private String currdate = dateformat.format(new Date());
+	private String currdate = dateformat.format(new Date()); //retrieves today's date in the correct format that corresponds with the coinGecko API
 	
 	/**
 	 * @return - ChartPanel with the live Time Series info for Bitcoin, Ethereum, and Cardano
@@ -48,13 +46,13 @@ public class DataModels {
 	 * This function may take a few seconds to run as the data being fetched must be searched several times**/
 	public ChartPanel createTimeSeries() throws ParseException{	
 		
-		String ogdate = NewUI.getInstance().getDate();
+		String ogdate = NewUI.getInstance().getDate(); //retrieves the date selected or set by the user
 		String sdate = ogdate;
 		
 		if(ogdate.isBlank() || dateformat.parse(currdate).before(dateformat.parse(sdate))) {
 			sdate = currdate; //sets the default date as current date if nothing is selected
 		} 
-		Date date = dateformat.parse(sdate);
+		Date date = dateformat.parse(sdate); //converts the string version of the date to a Date element
 		
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);

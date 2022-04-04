@@ -39,6 +39,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 import org.jfree.data.time.RegularTimePeriod;
 
+import cryptoTrader.utils.AvailableCryptoList;
 import cryptoTrader.utils.DataVisualizationCreator;
 import cryptoTrader.utils.DateFormat;
 
@@ -79,7 +80,7 @@ public class NewUI extends JFrame implements ActionListener{
 	private NewUI() {
 
 		// Set window title
-		super("test window");
+		super("VMTrader IX");
 
 		// Set top bar
 
@@ -173,14 +174,20 @@ public class NewUI extends JFrame implements ActionListener{
 		stats.revalidate();
 	}
 	
+	/**
+	 * @return the Object array containing the unorganized broker inputs**/
 	public Object[][] getClientInfo() {
 		return clientInfo;
 	}
 	
+	/**
+	 * @return number of rows in the table**/
 	public int getNumRows() {
 		return numRows;
 	}
 	
+	/**
+	 * @return a string version of the date selected by the user**/
 	public String getDate() {
 		return datePicker.getJFormattedTextField().getText();
 	}
@@ -212,8 +219,6 @@ public class NewUI extends JFrame implements ActionListener{
 						return;
 					}
 					
-					String traderName = traderObject.toString();
-					
 					Object coinObject = dtm.getValueAt(count, 1);
 					
 					if (coinObject == null) {
@@ -221,7 +226,12 @@ public class NewUI extends JFrame implements ActionListener{
 						return;
 					}
 					
-					String[] coinNames = coinObject.toString().split(",");
+					String[] coinSymbols = coinObject.toString().split(",");
+					String[] coinNames = new String[coinSymbols.length];
+					
+					for(int i = 0; i < coinSymbols.length; i++) {
+						coinNames[i] = AvailableCryptoList.getInstance().getCryptoID(coinSymbols[i].toLowerCase());
+					}
 					
 					Object strategyObject = dtm.getValueAt(count, 2);
 					
@@ -230,14 +240,12 @@ public class NewUI extends JFrame implements ActionListener{
 						return;
 					}
 					
-					String strategyName = strategyObject.toString();
-					
 					clientInfo[count][0] = traderObject;
 					clientInfo[count][1] = coinNames;
 					clientInfo[count][2] = strategyObject;
 					
-					System.out.println("initial: " + traderName + " " + Arrays.toString(coinNames) + " " + strategyName);
-					System.out.println("new: " + clientInfo[count][0] + " " + Arrays.toString((Object[]) clientInfo[count][1]) + " " + clientInfo[count][2]);
+					//System.out.println("initial: " + traderName + " " + Arrays.toString(coinNames) + " " + strategyName);
+					//System.out.println("new: " + clientInfo[count][0] + " " + Arrays.toString((Object[]) clientInfo[count][1]) + " " + clientInfo[count][2]);
 					//System.out.println("date: " + NewUI.getInstance().getDate());
 					
 	        }
@@ -247,7 +255,6 @@ public class NewUI extends JFrame implements ActionListener{
 			try {
 				creator.createCharts();
 			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			

@@ -70,13 +70,13 @@ public class DataVisualizationCreator {
 //		MainUI.getInstance().updateStats(scrollPane);
 	}
 	
-	private void createTableOutput() {
+	private void createTableOutput() throws ParseException {
 		// Dummy dates for demo purposes. These should come from selection menu
 		Object[] columnNames = {"Trader","Strategy","CryptoCoin","Action","Quantity","Price","Date"};
 		
 		TraderActions ta = new TraderActions();
-		Object[][] data = {};
-		//Object[][] data = ta.clientInfoTable();
+		//Object[][] data = {};
+		Object[][] data = ta.clientInfoTable();
 
 		JTable table = new JTable(data, columnNames);
 		//table.setPreferredSize(new Dimension(600, 300));
