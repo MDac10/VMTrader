@@ -1,5 +1,6 @@
 # VMTrader
 CS2212 final project.
+
 Submitted by: Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hong Ching Ingrid
 
 ## Project Description
@@ -39,6 +40,9 @@ The program should be run through Eclipse IDE and the folders necessary for this
 
 ## Authors
 @MDac10
+
 @vitowong0
+
 @IngridSin
+
 @xiaoyunbonato
