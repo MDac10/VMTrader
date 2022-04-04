@@ -11,10 +11,21 @@ import cryptoTrader.gui.NewUI;
 
 public class DataViewer extends JFrame{
 	
+	private static DataViewer instance;
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * @return creates a new instance of the DataViewer window**/
+	public static DataViewer getInstance() throws ParseException {
+		if (instance == null)
+			instance = new DataViewer();
+
+		return instance;
+	}
 
 	/**
 	 * Makes the viewer portion of the MVC design pattern, allowing the live data graphs to be seen in tabs

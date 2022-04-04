@@ -12,7 +12,7 @@ import javax.swing.JFormattedTextField.AbstractFormatter;
 public class DateFormat extends AbstractFormatter{
 
 	/**
-	 * 
+	 * Used as a class to convert date into a specific format
 	 */
 	private static final long serialVersionUID = 1L;
 	

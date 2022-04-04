@@ -5,15 +5,14 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.print.PrinterException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+//import java.text.SimpleDateFormat;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.Date;
+//import java.util.HashMap;
+//import java.util.List;
+//import java.util.Map;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -29,7 +28,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
+//import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -37,7 +36,7 @@ import javax.swing.table.TableColumn;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
-import org.jfree.data.time.RegularTimePeriod;
+//import org.jfree.data.time.RegularTimePeriod;
 
 import cryptoTrader.utils.AvailableCryptoList;
 import cryptoTrader.utils.DataVisualizationCreator;
@@ -50,24 +49,11 @@ public class NewUI extends JFrame implements ActionListener{
 	private static NewUI instance;
 	private JPanel stats, chartPanel, tablePanel;
 
-	// Should be a reference to a separate object in actual implementation
-	private List<String> selectedList;
-
-	private JTextArea selectedTickerList;
-//	private JTextArea tickerList;
-	private JTextArea tickerText;
-	private JTextArea BrokerText;
-	private JComboBox<String> strategyList;
-	private Map<String, List<String>> brokersTickers = new HashMap<>();
-	private Map<String, String> brokersStrategies = new HashMap<>();
-	private List<String> selectedTickers = new ArrayList<>();
-	private String selectedStrategy = "";
 	private DefaultTableModel dtm;
 	private JTable table;
 	
 	private static Object[][] clientInfo;
 	private static int numRows;
-	private static String selectedDate;
 	private static JDatePickerImpl datePicker;
 
 	public static NewUI getInstance() {
@@ -226,11 +212,11 @@ public class NewUI extends JFrame implements ActionListener{
 						return;
 					}
 					
-					String[] coinSymbols = coinObject.toString().split(",");
-					String[] coinNames = new String[coinSymbols.length];
+					String[] coinSymbols = coinObject.toString().split(","); //Holds the symbols that the user input
+					String[] coinNames = new String[coinSymbols.length]; //Creates a list to hold the proper lower case names of the crypto coins
 					
 					for(int i = 0; i < coinSymbols.length; i++) {
-						coinNames[i] = AvailableCryptoList.getInstance().getCryptoID(coinSymbols[i].toLowerCase());
+						coinNames[i] = AvailableCryptoList.getInstance().getCryptoID(coinSymbols[i].toLowerCase()); //Converts the crypto coin symbols to the actual name
 					}
 					
 					Object strategyObject = dtm.getValueAt(count, 2);
@@ -240,19 +226,16 @@ public class NewUI extends JFrame implements ActionListener{
 						return;
 					}
 					
+					//the data from the user input table is placed inside the clientInfo object array
 					clientInfo[count][0] = traderObject;
 					clientInfo[count][1] = coinNames;
 					clientInfo[count][2] = strategyObject;
-					
-					//System.out.println("initial: " + traderName + " " + Arrays.toString(coinNames) + " " + strategyName);
-					//System.out.println("new: " + clientInfo[count][0] + " " + Arrays.toString((Object[]) clientInfo[count][1]) + " " + clientInfo[count][2]);
-					//System.out.println("date: " + NewUI.getInstance().getDate());
 					
 	        }
 			
 			stats.removeAll();
 			DataVisualizationCreator creator = new DataVisualizationCreator();
-			try {
+			try { //These functions can throw a parse exception so a try-catch is used
 				creator.createCharts();
 			} catch (ParseException e1) {
 				e1.printStackTrace();

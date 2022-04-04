@@ -5,47 +5,34 @@
 
 package cryptoTrader.utils;
 
-//import java.io.IOException;
-//import java.net.HttpURLConnection;
-//import java.net.URL;
-//
-//import com.google.gson.JsonArray;
-//import com.google.gson.JsonObject;
-//import com.google.gson.JsonParser;
-
-import cryptoTrader.gui.NewUI;
+//import cryptoTrader.gui.NewUI;
 
 import java.lang.reflect.Array;
-//import java.lang.reflect.Array;
-//import java.util.Scanner;
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
-//import java.awt.print.PrinterException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
+//import java.util.ArrayList;
+//import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Vector;
+//import java.util.HashMap;
+//import java.util.List;
+//import java.util.Map;
+//import java.util.Properties;
+//import java.util.Vector;
 
-/*
+/**
  * Strategy A: if specific coin is LOWER than it was yesterday, buy 100 quantity
  */
 public class StrategyA extends StrategyInterface {
 
-	/*
+	/**
 	 * Setting up date (to be used later)
 	 */
 	private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
 	private String currdate = dateformat.format(new Date());
 	private int numRows;
 
-	/*
+	/**
 	 * Using a 2D array with 4 columns, we still store the following parameters
 	 * 
 	 * column 0: Name column 1: Price column 2: Action on coin column 3: Quantity of
@@ -61,7 +48,7 @@ public class StrategyA extends StrategyInterface {
 		String yesterday;
 		numRows = coinList.length;
 
-		int quantity = 100;
+		int quantity = 0;
 
 		// store prices for today (coinPrice) and yesterday (oldCoinPrice)
 		double today_coinPrice;
@@ -113,19 +100,20 @@ public class StrategyA extends StrategyInterface {
 			
 			
 			// If today's price is less, execute strategy
-				if (todayPrice < ydayPrice) {
-					System.out.println("Performing Strategy A on " + today_combinedList[i][0]);
+			if (todayPrice < ydayPrice) {
+				System.out.println("Performing Strategy A on " + today_combinedList[i][0]);
 
 					// Action is to buy
-					today_combinedList[i][2] = "Buy";
+				today_combinedList[i][2] = "Buy";
 
 					// Increase the quantity by 100
-//					int quantity += 100;
-					today_combinedList[i][3] = quantity;
+				quantity = 100;
+				today_combinedList[i][3] = quantity;
 
-				} else {
-					today_combinedList[i][2] = "Hold";		// Hold from doing anything
-				}
+			} else {
+				today_combinedList[i][2] = "Hold";		// Hold from doing anything
+				today_combinedList[i][3] = quantity;
+			}
 			
 		}
 		

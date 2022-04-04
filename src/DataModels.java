@@ -17,7 +17,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.LogAxis;
-import org.jfree.chart.axis.LogarithmicAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
@@ -36,6 +35,9 @@ import cryptoTrader.gui.NewUI;
  * This class is meant to act as the model for Data Models in the MVC design pattern**/
 public class DataModels {
 	
+	private static double[] btcPrices = new double[5];
+	private static double[] ethPrices = new double[5];
+	private static double[] crdPrices = new double[5];
 	private static DataFetcher df = new DataFetcher();
 	private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
 	private String currdate = dateformat.format(new Date()); //retrieves today's date in the correct format that corresponds with the coinGecko API
@@ -57,18 +59,31 @@ public class DataModels {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		
+		/**
+		 * Creates the three instances of coin time series
+		 * It was assumed that only these three crypto coins should be monitored because many brokers may include different cryptocoins
+		 * and there was no indication of having an option to look at any other kinds of coins**/
 		TimeSeries series1 = new TimeSeries("Bitcoin - Daily");
 		TimeSeries series2 = new TimeSeries("Ethereum - Daily");
 		TimeSeries series3 = new TimeSeries("Cardano - Daily");
 
-		for(int i = 0; i < 5; i++) { 
+		for(int i = 0; i < 5; i++) { //creates 5 data points of these respective cryptocoins over the past 5 days from the date selected 
 			
 			Date newdate = cal.getTime();
 			sdate = dateformat.format(newdate);
 			
-			series1.add(new Day(cal.getTime()), df.getPriceForCoin("bitcoin", sdate));
-			series2.add(new Day(cal.getTime()), df.getPriceForCoin("ethereum", sdate));
-			series3.add(new Day(cal.getTime()), df.getPriceForCoin("cardano", sdate));
+			double btc = df.getPriceForCoin("bitcoin", sdate);
+			btcPrices[i] = btc; //Saves the calculated values into an array to be used for the scatter plot
+			
+			double eth = df.getPriceForCoin("ethereum", sdate);
+			ethPrices[i] = eth; //Saves the calculated values into an array to be used for the scatter plot
+			
+			double crd = df.getPriceForCoin("cardano", sdate);
+			crdPrices[i] = crd;//Saves the calculated values into an array to be used for the scatter plot
+			
+			series1.add(new Day(cal.getTime()), btc);
+			series2.add(new Day(cal.getTime()), eth);
+			series3.add(new Day(cal.getTime()), crd);
 			
 			cal.add(Calendar.DATE, -1); //decrement the date
 		}
@@ -119,18 +134,26 @@ public class DataModels {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		
+		/**
+		 * Creates the three instances of coin time series
+		 * It was assumed that only these three crypto coins should be monitored because many brokers may include different cryptocoins
+		 * and there was no indication of having an option to look at any other kinds of coins**/
 		TimeSeries series1 = new TimeSeries("Bitcoin - Daily");
 		TimeSeries series2 = new TimeSeries("Ethereum - Daily");
 		TimeSeries series3 = new TimeSeries("Cardano - Daily");
 
-		for(int i = 0; i < 5; i++) { 
+		for(int i = 0; i < 5; i++) { //creates 5 data points of these respective cryptocoins over the past 5 days from the date selected
 			
 			Date newdate = cal.getTime();
 			sdate = new SimpleDateFormat("dd-MM-yyyy").format(newdate);
 			
-			series1.add(new Day(cal.getTime()), df.getPriceForCoin("bitcoin", sdate));
-			series2.add(new Day(cal.getTime()), df.getPriceForCoin("ethereum", sdate));
-			series3.add(new Day(cal.getTime()), df.getPriceForCoin("cardano", sdate));
+			//series1.add(new Day(cal.getTime()), df.getPriceForCoin("bitcoin", sdate));
+			//series2.add(new Day(cal.getTime()), df.getPriceForCoin("ethereum", sdate));
+			//series3.add(new Day(cal.getTime()), df.getPriceForCoin("cardano", sdate));
+			
+			series1.add(new Day(cal.getTime()), btcPrices[i]);
+			series2.add(new Day(cal.getTime()), ethPrices[i]);
+			series3.add(new Day(cal.getTime()), crdPrices[i]);
 			
 			cal.add(Calendar.DATE, -1); //decrement the date
 		}

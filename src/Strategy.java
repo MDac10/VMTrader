@@ -9,13 +9,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import cryptoTrader.gui.MainUI;
+//import cryptoTrader.gui.MainUI;
 import cryptoTrader.gui.NewUI;
 
 public class Strategy {
 	private double[] prices;
 	private String defaultDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 	private TradeResult trade;
+	private int stratRows;
 	
 	/**
 	 * @param name - Broker name
@@ -29,6 +30,7 @@ public class Strategy {
 		DataFetcher data = new DataFetcher();
 		
 		prices = new double[Array.getLength(coins)];
+		stratRows = Array.getLength(coins);
 		
 		for(int i = 0; i < Array.getLength(coins); i++) { 
 			
@@ -55,18 +57,20 @@ public class Strategy {
 				StrategyD sd = new StrategyD();
 				trade = sd.trade(coins, prices);
 			
-			} /*
-				 * else { //Default (strategy is "None") means that no trades will occur so the
-				 * broker will have 0 quantity of specified coins for(int i = 0; i <
-				 * Array.getLength(coins); i++) { quantities[i] = 0; }
-				 * 
-				 * }
-				 */
+			} 
 		
 	}
 	
+	/**
+	 * @return the TradeResult data structure holding the information necessary for the bar graph**/
 	public TradeResult getTrade() {
 		return trade;
+	}
+	
+	/**
+	 * @return the number of rows in each of the brokers trading instances**/
+	public int getStratRows() {
+		return stratRows;
 	}
 
 	/**
