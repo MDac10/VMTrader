@@ -35,7 +35,7 @@ public class Strategy {
 		for(int i = 0; i < Array.getLength(coins); i++) { 
 			
 			String currCoin = coins[i];
-			System.out.println("Strategy class: " + currCoin);
+			//System.out.println("Strategy class: " + currCoin);
 			double price = data.getPriceForCoin(currCoin, date);
 			prices[i] = price;
 			

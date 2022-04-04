@@ -72,7 +72,7 @@ public class StrategyA extends StrategyInterface {
 		cal.add(Calendar.DATE, -1); // decrement the date
 		yesterday = dateformat.format(newdate);
 
-		System.out.println("Strategy A");
+		//System.out.println("Strategy A");
 		
 		double todayPrice;
 		double ydayPrice;

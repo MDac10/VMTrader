@@ -3,10 +3,13 @@
  * TraderActions class conducts the organization of data for each trader**/
 package cryptoTrader.utils;
 
+
 //import java.lang.reflect.Array;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 //import java.util.Arrays;
+import java.util.Date;
 
 import cryptoTrader.gui.NewUI;
 
@@ -39,7 +42,12 @@ public class TraderActions {
 				currAction = objArray[j][2];
 				currQuant = objArray[j][3];
 				currPrice = objArray[j][1];
-				currDate = (Object) date;
+				
+				if(date.isBlank()) {
+					currDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+				} else {
+					currDate = (Object) date;
+				}
 				
 				Object[] row = {brokerName, strategyName, currCoin, currAction, currQuant, currPrice, currDate};
 				brokerList.add(row); //Adds each row to the array list of brokers
