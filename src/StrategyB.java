@@ -25,9 +25,9 @@ public class StrategyB extends StrategyInterface {
     private int numRows;
 
     /*
-    * Getting the action necessary for each coin from strategy B
-    */
-	
+     * Getting the action necessary for each coin from strategy B
+     */
+
     @Override
     public TradeResult trade(String[] coinList, double[] prices) {
         Object traderName;
@@ -45,9 +45,9 @@ public class StrategyB extends StrategyInterface {
         Date newdate = cal.getTime();
 
         /*
-	*For each coin, get today's price, store data in combined list
-	*/
-	    
+         *For each coin, get today's price, store data in combined list
+         */
+
         today_coinPrice = df.getPriceForCoin(coinList[i], currdate);
         today_combinedList[i][0] = coinList[i]; // the name
         today_combinedList[i][1] = today_coinPrice;
@@ -58,16 +58,16 @@ public class StrategyB extends StrategyInterface {
 
 
         /* Looping through the coinList */
-	
+
         for (int i = 0; i < Array.getLength(coinList); i++) {
 
 
             /* Creating Strategy B */
-		
+
             System.out.println("Strategy B:");
 
             /* Making Trader select a Crypto Coin */
-		
+
             System.out.println("Select Crypto Coin: ");
             double selectCrypto = reader.nextDouble();
             String strSelect = Double.toString(selectCrypto);
@@ -75,7 +75,7 @@ public class StrategyB extends StrategyInterface {
             String searchedValue = strSelect;
 
             /* Searching if desired Crypto is in coinList */
-		
+
             for (String x: coinList) {
                 if (x == searchedValue) {
                     boolean found = true;
@@ -85,13 +85,13 @@ public class StrategyB extends StrategyInterface {
 
 
             /* Finding the minimum and maximum price of coinList */
-		
+
             Arrays.sort(prices);
             double priceMinimum = prices[0];
             double priceMaximum = prices[prices.length - 1];
 
             /* Trader selects their own Crypto price minimum */
-		
+
             System.out.println("Select Lowest Crypto Price Limit: ");
             double lowestPriceLim = reader.nextDouble();
 
@@ -100,7 +100,7 @@ public class StrategyB extends StrategyInterface {
             }
 
             /* Trader selects their own Crypto price maximum */
-		
+
             System.out.println("Select Highest Crypto Price Limit: ");
             double highestPriceLim = reader.nextDouble();
 
