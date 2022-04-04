@@ -44,10 +44,8 @@ public class StrategyC extends StrategyInterface{
 		}
 		
 		double[] CoinRatio = new double[numOfCoins]; // ratio for buy/sell quantity
-		double sumOfRevCRatio = 0;	//sum of reversed ratio
-		double[] finRatio = new double[numOfCoins];		//final ratio for buy/sell
 		int[] finQty = new int[numOfCoins]; // final quantity for each coin
-		int[] action = new int[numOfCoins]; // 0 = buy, 1 = sell, 2 = hold
+		String[] action = new String[numOfCoins]; // 0 = buy, 1 = sell, 2 = hold
 		double[] trend = new double[numOfCoins];	//slope of trends of coins
 		
 		String[] coinIDList = new String[numOfCoins];
@@ -92,10 +90,10 @@ public class StrategyC extends StrategyInterface{
 		
 		for (int i = 0; i < numOfCoins; i++) {
 			if (trend[i] < 0) {
-				action[i] = 1;
+				action[i] = "Sell";
 			}
 			else if (trend[i] > 0) {
-				action[i] = 0;
+				action[i] = "Buy";
 			}
 			
 		}
