@@ -32,156 +32,124 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Vector;
 
-
 public class StrategyA extends StrategyInterface {
-	
-	/* 
-	 * Strategy A:
-	 * if coin is LOWER than yesterday, buy 100 qty
-	 */	
-	
+
+	/*
+	 * Strategy A: if coin is LOWER than yesterday, buy 100 quantiddy
+	 */
+
 	private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
 	private String currdate = dateformat.format(new Date());
-	
+
 //	private Object strategy;
 //	private ArrayList<Object[]> strategyA = new ArrayList<Object[]>();
-	
+
 //	private static Object[][] coinTransactions;
-	
+
 //	@Override
 	public TradeResult trade(String[] coinList, double[] coinPriceList) throws ParseException {
 		String coin;
-//		String[] coinNames = new String[coinList.length];
 		String coinNames;
-		
+
 		// store prices for today and yesterday
 		double coinPrice;
 		double oldCoinPrice;
 		
-		// 
-		Object traderName;
-		double[] oldCoinPriceList;
+		
+		int quantity;
+
+		//
+//		Object traderName;
+//		double[] oldCoinPriceList;
 //		Scanner reader = null;
-		
+
 		// will be the length of the coinList
-		Object[][] todayCombinedList = new Object[coinList.length][2];
-		Object[][] oldCombinedList = new Object[coinList.length][2];
-		
+		Object[][][][] todayCombinedList = new Object[coinList.length][][][];
+		Object[][][][] oldCombinedList = new Object[coinList.length][][][];
+
 		System.out.println("Strategy A");
-//		System.out.println("Select crypto coin:");
-//		double selectCrypto = reader.nextDouble();
-//		String strSelect = Double.toString(selectCrypto);
-		
-//		String searchedValue = strSelect;
-		
+
 		DataFetcher df = new DataFetcher();
-		
-//		String ogdate = NewUI.getInstance().getDate();
-//		String sdate = ogdate;
-		
+
 		Date date = dateformat.parse(currdate);
-		
+
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		
-		
-		
-		
-		
+
 		String yesterday;
-		
+
 		Date newdate = cal.getTime();
-		cal.add(Calendar.DATE, -1);			//decrement the date
+		cal.add(Calendar.DATE, -1); // decrement the date
 		yesterday = dateformat.format(newdate);
-	
-//		cal.add(Calendar.DATE, -1); //decrement the date
-		
+
+
+
 		// then loop through the coinList
 		for (int i = 0; i < Array.getLength(coinList); i++) {
-			
+
 			// for each coin, get today's price, store in coinPriceList
 			coinPrice = df.getPriceForCoin(coinList[i], currdate);
-		
-			
-			todayCombinedList[i][0] = coinList[i];
-			todayCombinedList[0][i] = coinPrice;
-			
-	
+
+			todayCombinedList[i][0][0][0] = coinList[i];
+			todayCombinedList[0][i][0][0] = coinPrice;
+
 			// for each coin, get yesterday's price, store in yesterday PriceList
 //			oldCoinPrice = coinList[i].getPriceForCoin("bitcoin", "02-04-2022");
-						
-			
 			oldCoinPrice = df.getPriceForCoin(coinList[i], yesterday);
-			
-			oldCombinedList[i][0] = coinList[i];
-			oldCombinedList[0][i] = coinPrice;
-			
-			
-//			oldCoinPriceList[i] = oldCoinPrice;
+
+			oldCombinedList[i][0][0][0] = coinList[i];
+			oldCombinedList[0][i][0][0] = coinPrice;
 		}
-		
+
 		// now we compare today's prices (todayCombinedList) vs yesterday's prices (oldCombinedList)
+		// (oldCombinedList)
 		for (int j = 0; j < Array.getLength(todayCombinedList); j++) {
-			
+
 			double todayPrice;
 			double oldPrice;
-			
-			todayPrice = (double) todayCombinedList[0][j];
-			oldPrice = (double) oldCombinedList[0][j];
-					
+
+			todayPrice = (double) todayCombinedList[0][j][0][0];
+			oldPrice = (double) oldCombinedList[0][j][0][0];
+
 			while (todayPrice < oldPrice) {
-				System.out.println("Performing stratA on" + todayCombinedList[j][0]);
-				
-				
-			//increase quantity by 100
-		}
-		
-		
+				System.out.println("Performing Strategy A on" + todayCombinedList[j][0]);
+
+				for ()
+				// increase quantity by 100
+					
+					
+//				[name of coin][price of coin yesterday][action performed][qty]	
+			}
+
 			
-			
-//			searchedValue.getPriceForCoin(searchedValue, currentDate) {
-//				
-//			}
-			// for each coin, get 
-		
-		
-		
+		// Strategy A method
 		/*
-		 * for example if u wanted the bitcoin price for yesterday (02-04-2022)
-		 * https://api.coingecko.com/api/v3/coins/bitcoin/history?date=02-04-2022&localization=false
-		 * tokenID is 'bitcoin', date is 'DD-MM-YYYY', and keep 'localization=false'
+		 * for the coinList[i] ... increase the quantity to 100
+		 * thats it?
 		 */
 		
-		
-		
-		// Iterate thru the list of coins and perform stratA on each 
-		for (int i = 0; i < Array.getLength(coinList); i++) {
-//			coin = coinList[i][0];
+//		int strategyA (String[] coinList) {
+//			
+//		}
+//			
 			
+
+		/*
+		 * for example if u wanted the bitcoin price for yesterday (02-04-2022)
+		 * https://api.coingecko.com/api/v3/coins/bitcoin/history?date=02-04-2022&localization=false 
+		 * tokenID is 'bitcoin', date is 'DD-MM-YYYY', and keep 'localization=false'
+		 */
+
+			// Iterate thru the list of coins and perform stratA on each
+			for (int i = 0; i < Array.getLength(coinList); i++) {
+//			coin = coinList[i][0];
+
 //			if (coin.getPriceForCoin is less than previous day's lowest) {
 //					buy 100qty
+			}
+
 		}
-			
-			
-			
-			
-			
-//			coinList[i] = coinTransactions[i][i];
-			
-			
-//			clientInfo[count][1];
-//			coinList[i] = coin;
-//			coin.getPriceForCoin(currCoin,date);
-//			coin
-//			
-//			if (coin.price <= coin.price.date-1) {
-//				buy100
-//			}
-		}	
-			
-			
-//		}
-//		if (coinList)
+
 		return null;
 	}
 
