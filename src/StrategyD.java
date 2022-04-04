@@ -38,7 +38,7 @@ public class StrategyD extends StrategyInterface{
 		List<String> inCoinList = new ArrayList<>(Arrays.asList(inCoinArray));
 		
 		for ( String i : coinList) {
-			if ( inCoinList.contains(i.toLowerCase()) == false ) {
+			if ( inCoinList.contains(i) == false ) {
 				System.out.println("Fail transaction due to invalid cryptocoin.");
 				status = false;
 				return null;
@@ -49,7 +49,7 @@ public class StrategyD extends StrategyInterface{
 		double sumOfRevCRatio = 0;	//sum of reversed ratio
 		double[] finRatio = new double[numOfCoins];		//final ratio for buy/sell
 		int[] finQty = new int[numOfCoins]; // final quantity for each coin
-		int[] action = new int[numOfCoins]; // buy, sell,  hold
+		String[] action = new String[numOfCoins]; // buy, sell,  hold
 		double[] trend = new double[numOfCoins];	//slope of trends of coins
 		
 		String[] coinIDList = new String[numOfCoins];
@@ -109,7 +109,7 @@ public class StrategyD extends StrategyInterface{
 			
 		}
 		
-		Object[][] result;
+		Object[][] result = new Object[numOfCoins][4];
 		TradeResult TR = new TradeResult();
 		for (int i = 0; i < numOfCoins; i++) {
 			result[i][0]= coinList[i];
