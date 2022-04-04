@@ -35,39 +35,28 @@ import java.util.Vector;
 public class StrategyA extends StrategyInterface {
 
 	/*
-	 * Strategy A: if coin is LOWER than yesterday, buy 100 quantiddy
+	 * Strategy A: if coin is LOWER than yesterday, buy 100 quantity
 	 */
 
 	private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
 	private String currdate = dateformat.format(new Date());
 
-//	private Object strategy;
-//	private ArrayList<Object[]> strategyA = new ArrayList<Object[]>();
-
-//	private static Object[][] coinTransactions;
-
-//	@Override
+	
 	public TradeResult trade(String[] coinList, double[] coinPriceList) throws ParseException {
 		String coin;
 		String coinNames;
+		String yesterday;
 
-		// store prices for today and yesterday
-		double coinPrice;
-		double oldCoinPrice;
-		
-		
+		// store prices for today (coinPrice) and yesterday (oldCoinPrice)
+		double today_coinPrice;
+		double yday_coinPrice;
+
+		// how many coins have been dealt with
 		int quantity;
 
-		//
-//		Object traderName;
-//		double[] oldCoinPriceList;
-//		Scanner reader = null;
-
 		// will be the length of the coinList
-		Object[][][][] todayCombinedList = new Object[coinList.length][][][];
-		Object[][][][] oldCombinedList = new Object[coinList.length][][][];
-
-		System.out.println("Strategy A");
+		Object[][][][] today_combinedList = new Object[coinList.length][][][];
+		Object[][][][] yday_combinedList = new Object[coinList.length][][][];
 
 		DataFetcher df = new DataFetcher();
 
@@ -76,45 +65,44 @@ public class StrategyA extends StrategyInterface {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 
-		String yesterday;
 
 		Date newdate = cal.getTime();
 		cal.add(Calendar.DATE, -1); // decrement the date
 		yesterday = dateformat.format(newdate);
 
-
-
+		System.out.println("Strategy A");
+		
 		// then loop through the coinList
 		for (int i = 0; i < Array.getLength(coinList); i++) {
 
 			// for each coin, get today's price, store in coinPriceList
-			coinPrice = df.getPriceForCoin(coinList[i], currdate);
+			today_coinPrice = df.getPriceForCoin(coinList[i], currdate);
 
-			todayCombinedList[i][0][0][0] = coinList[i];
-			todayCombinedList[0][i][0][0] = coinPrice;
+			today_combinedList[i][0][0][0] = coinList[i];
+			today_combinedList[0][i][0][0] = today_coinPrice;
 
 			// for each coin, get yesterday's price, store in yesterday PriceList
 //			oldCoinPrice = coinList[i].getPriceForCoin("bitcoin", "02-04-2022");
-			oldCoinPrice = df.getPriceForCoin(coinList[i], yesterday);
+			yday_coinPrice = df.getPriceForCoin(coinList[i], yesterday);
 
-			oldCombinedList[i][0][0][0] = coinList[i];
-			oldCombinedList[0][i][0][0] = coinPrice;
+			yday_combinedList[i][0][0][0] = coinList[i];
+			yday_combinedList[0][i][0][0] = yday_coinPrice;
 		}
 
 		// now we compare today's prices (todayCombinedList) vs yesterday's prices (oldCombinedList)
 		// (oldCombinedList)
-		for (int j = 0; j < Array.getLength(todayCombinedList); j++) {
+		for (int j = 0; j < Array.getLength(today_combinedList); j++) {
 
 			double todayPrice;
-			double oldPrice;
+			double ydayPrice;
 
-			todayPrice = (double) todayCombinedList[0][j][0][0];
-			oldPrice = (double) oldCombinedList[0][j][0][0];
+			todayPrice = (double) today_combinedList[0][j][0][0];
+			ydayPrice = (double) yday_combinedList[0][j][0][0];
 
-			while (todayPrice < oldPrice) {
-				System.out.println("Performing Strategy A on" + todayCombinedList[j][0]);
+			while (todayPrice < ydayPrice) {
+				System.out.println("Performing Strategy A on" + today_combinedList[j][0]);
 
-				for ()
+//				for ()
 				// increase quantity by 100
 					
 					
@@ -125,13 +113,12 @@ public class StrategyA extends StrategyInterface {
 		// Strategy A method
 		/*
 		 * for the coinList[i] ... increase the quantity to 100
-		 * thats it?
+		 * i think that's it?
+		 * 
+		 * for all other coins that dont meet the requirements, just leave quantity as is (maybe 0?)
+		 * 
 		 */
 		
-//		int strategyA (String[] coinList) {
-//			
-//		}
-//			
 			
 
 		/*
