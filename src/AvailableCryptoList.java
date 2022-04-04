@@ -26,7 +26,7 @@ public class AvailableCryptoList {
 		return instance;
 	}
 	
-	private AvailableCryptoList() {
+	AvailableCryptoList() {
 		findAvailableCryptos();
 	}
 	
@@ -49,13 +49,13 @@ public class AvailableCryptoList {
 				JsonArray jsonArray = new JsonParser().parse(inline).getAsJsonArray();
 				int size = jsonArray.size();
 				
-				String name, id;
+				String name, id, symbol;
 				for (int i = 0; i < size; i++) {
 					JsonObject object = jsonArray.get(i).getAsJsonObject();
 					name = object.get("name").getAsString();
 					id = object.get("id").getAsString();
-					
-					availableCryptosMap.put(name, id);
+					symbol = object.get("symbol").getAsString();
+					availableCryptosMap.put(symbol, id);
 					availableCryptosList.add(name);
 				}
 			}
@@ -87,14 +87,14 @@ public class AvailableCryptoList {
 				JsonArray jsonArray = new JsonParser().parse(inline).getAsJsonArray();
 				int size = jsonArray.size();
 				
-				String name, id;
+				String name, id, symbol;
 				for (int i = 0; i < size; i++) {
 					JsonObject object = jsonArray.get(i).getAsJsonObject();
-					name = object.get("name").getAsString();
+					//name = object.get("name").getAsString();
 					id = object.get("id").getAsString();
-					
-					availableCryptosMap.put(name, id);
-					availableCryptosList.add(name);
+					symbol = object.get("symbol").getAsString();
+					availableCryptosMap.put(symbol, id);
+					availableCryptosList.add(symbol);
 				}
 			}
 
