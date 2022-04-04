@@ -69,7 +69,7 @@ public class AvailableCryptoList {
 
 		String urlString = 
 				"https://api.coingecko.com/api/v3/coins/markets" + 
-						"?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false";
+						"?vs_currency=cad&order=market_cap_desc&per_page=100&page=1&sparkline=false";
 //		ALPHAVANTAGE API KEY = VNEY4VV2AWF1EB51
 		try {
 			URL url = new URL(urlString);
