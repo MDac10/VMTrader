@@ -1,5 +1,5 @@
 /**
- * @author Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hoi Ching Ingrid
+ * @author Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hong Ching Ingrid
  * @course 2212
  * @project Cryptocoin trader platform - final project deliverable **/
 package cryptoTrader.gui;

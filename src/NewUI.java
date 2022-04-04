@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -237,13 +238,18 @@ public class NewUI extends JFrame implements ActionListener{
 					
 					System.out.println("initial: " + traderName + " " + Arrays.toString(coinNames) + " " + strategyName);
 					System.out.println("new: " + clientInfo[count][0] + " " + Arrays.toString((Object[]) clientInfo[count][1]) + " " + clientInfo[count][2]);
-					System.out.println("date: " + NewUI.getInstance().getDate());
+					//System.out.println("date: " + NewUI.getInstance().getDate());
 					
 	        }
 			
 			stats.removeAll();
 			DataVisualizationCreator creator = new DataVisualizationCreator();
-			creator.createCharts();
+			try {
+				creator.createCharts();
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 		} else if ("addTableRow".equals(command)) {
 			

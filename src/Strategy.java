@@ -15,8 +15,7 @@ public class Strategy {
 	private String[] actions;
 	private double[] quantities;
 	private double[] prices;
-	private String defaultDatePattern = "dd/MM/yyyy";
-	private String defaultDate = new SimpleDateFormat(defaultDatePattern).format(new Date());
+	private String defaultDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 	
 	/**
 	 * @param name - Broker name
@@ -38,19 +37,19 @@ public class Strategy {
 			
 			if(strategy.equals("Strategy-A")) {
 				StrategyA sa = new StrategyA();
-				sa.trade(coins, prices);
+				TradeResult saTrade = sa.trade(coins, prices);
 			
 			}else if(strategy.equals("Strategy-B")) {
 				StrategyB sb = new StrategyB();
-				sb.trade(coins, prices);
+				TradeResult sbTrade = sb.trade(coins, prices);
 			
 			}else if(strategy.equals("Strategy-C")) {
 				StrategyC sc = new StrategyC();
-				sc.trade(coins, prices);
+				TradeResult scTrade = sc.trade(coins, prices);
 			
 			}else if(strategy.equals("Strategy-D")) {
 				StrategyD sd = new StrategyD();
-				sd.trade(coins, prices);
+				TradeResult sdTrade = sd.trade(coins, prices);
 			
 			}else {
 				//Default (strategy is "None") means that no trades will occur so the broker will have 0 quantity of specified coins

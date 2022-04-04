@@ -11,6 +11,14 @@ public class TradeResult {
 			this.traderName = traderName;
 			this.numOfStrats = numOfStrats;
 		}
+		
+		public int getNumOfStrats() {
+			return numOfStrats;
+		}
+		
+		public Object getName() {
+			return traderName;
+		}
 	}
 
 }

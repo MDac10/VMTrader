@@ -1,6 +1,7 @@
 package cryptoTrader.utils;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.lang.reflect.Array;
@@ -10,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
@@ -75,29 +77,6 @@ public class DataVisualizationCreator {
 		TraderActions ta = new TraderActions();
 		Object[][] data = {};
 		//Object[][] data = ta.clientInfoTable();
-		
-		//Object[][] rawData = NewUI.getInstance().getClientInfo();
-		//String date = NewUI.getInstance().getDate();
-		
-		//int counter = 0;
-		//Object[][] data = {};
-		
-		//for(int i = 0; i < NewUI.getInstance().getNumRows(); i++) {
-			//Object brokerName = rawData[i][0];
-			//Object strategyName = rawData[i][2];
-			//String[] coinName = rawData[i][1].toString().split(","); 
-			//Strategy strat = new Strategy(brokerName, strategyName, coinName);
-			//String[] actions = strat.getActions();
-			//double[] quantities = strat.getQuants();
-			//double[] prices = strat.getPrices();
-			
-			//for(int j = 0; j < Array.getLength(coinName); j++) {
-				//counter++;
-				//Object currCoin = coinName[j];
-				
-			//}
-			
-		//}
 
 		JTable table = new JTable(data, columnNames);
 		//table.setPreferredSize(new Dimension(600, 300));
@@ -107,8 +86,6 @@ public class DataVisualizationCreator {
                 "Trader Actions",
                 TitledBorder.CENTER,
                 TitledBorder.TOP));
-		
-	
 		
 		scrollPane.setPreferredSize(new Dimension(800, 300));
 		table.setFillsViewportHeight(true);;

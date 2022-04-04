@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -53,6 +55,8 @@ public class MainUI extends JFrame implements ActionListener {
 	private String selectedStrategy = "";
 	private DefaultTableModel dtm;
 	private JTable table;
+	
+	private static Object[][] clientInfo = {};
 
 	public static MainUI getInstance() {
 		if (instance == null)
@@ -64,7 +68,7 @@ public class MainUI extends JFrame implements ActionListener {
 	private MainUI() {
 
 		// Set window title
-		super("Crypto Trading Tool");
+		super("VM Trader IX");
 
 		// Set top bar
 
@@ -171,10 +175,15 @@ public class MainUI extends JFrame implements ActionListener {
 		stats.add(component);
 		stats.revalidate();
 	}
+	
+	public JTable getClientInfo() {
+		return table;
+	}
 
 	public static void main(String[] args) {
 		JFrame frame = MainUI.getInstance();
 		frame.setSize(900, 600);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
 	}
@@ -202,13 +211,17 @@ public class MainUI extends JFrame implements ActionListener {
 						return;
 					}
 					String strategyName = strategyObject.toString();
-				//instead of a print out of the data items, they should be implemented into an object[] each and then added to an object[][] table
 					System.out.println(traderName + " " + Arrays.toString(coinNames) + " " + strategyName);
 	        }
 			stats.removeAll();
 			DataVisualizationCreator creator = new DataVisualizationCreator();
-			creator.createCharts();
+			try {
+				creator.createCharts();
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
 		} else if ("addTableRow".equals(command)) {
+
 			dtm.addRow(new String[3]);
 		} else if ("remTableRow".equals(command)) {
 			int selectedRow = table.getSelectedRow();

@@ -17,9 +17,8 @@ public class DateFormat extends AbstractFormatter{
 	private static final long serialVersionUID = 1L;
 	
 	
-	private String datePatern = "dd/MM/yyyy";
+	private String datePatern = "dd-MM-yyyy";
 	private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePatern);
-	
 	
 	@Override
 	public Object stringToValue(String text) throws ParseException {
@@ -28,7 +27,6 @@ public class DateFormat extends AbstractFormatter{
 		
 	}
 
-	//formats the selected date from the dat picker
 	@Override
 	public String valueToString(Object value) throws ParseException {
 
