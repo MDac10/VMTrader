@@ -127,13 +127,6 @@ public class StrategyA extends StrategyInterface {
 		 * tokenID is 'bitcoin', date is 'DD-MM-YYYY', and keep 'localization=false'
 		 */
 
-			// Iterate thru the list of coins and perform stratA on each
-			for (int i = 0; i < Array.getLength(coinList); i++) {
-//			coin = coinList[i][0];
-
-//			if (coin.getPriceForCoin is less than previous day's lowest) {
-//					buy 100qty
-			}
 
 		}
 
