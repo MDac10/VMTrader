@@ -43,28 +43,36 @@ public class StrategyA extends StrategyInterface {
 	 */
 	private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
 	private String currdate = dateformat.format(new Date());
+	private int numRows;
 
 	/*
-	 * Using a 2D array with 4 columns, we still store the following parameters (in
-	 * order): Coin name, coin price, action on coin, quantity of coin Name and
-	 * price will be taken from coinlist and coinPriceList, respectively Action will
-	 * be either buy, or nothing Quantity of the coin will increase in increments of
-	 * 100
+	 * Using a 2D array with 4 columns, we still store the following parameters
+	 * 
+	 * column 0: Name column 1: Price column 2: Action on coin column 3: Quantity of
+	 * coin
+	 * 
+	 * Name and price will be taken from coinlist and coinPriceList, respectively
+	 * Action will be either buy, or nothing Quantity of the coin will increase in
+	 * increments of 100
 	 */
 	public TradeResult trade(String[] coinList, double[] coinPriceList) throws ParseException {
 //		String coin;
 //		String coinNames;
 		String yesterday;
+		numRows = coinList.length;
 
-		int quantity = 0;
+		int quantity = 100;
 
 		// store prices for today (coinPrice) and yesterday (oldCoinPrice)
 		double today_coinPrice;
 		double yday_coinPrice;
 
 		// will be the length of the coinList
-		Object[][][][] today_combinedList = new Object[coinList.length][][][];
-		Object[][][][] yday_combinedList = new Object[coinList.length][][][];
+//		Object[][][][] today_combinedList = new Object[coinList.length][][][];
+//		Object[][][][] yday_combinedList = new Object[coinList.length][][][];
+
+		Object[][] today_combinedList = new Object[coinList.length][4];
+		Object[][] yday_combinedList = new Object[coinList.length][4];
 
 		DataFetcher df = new DataFetcher();
 
@@ -78,53 +86,57 @@ public class StrategyA extends StrategyInterface {
 		yesterday = dateformat.format(newdate);
 
 		System.out.println("Strategy A");
+		
+		double todayPrice;
+		double ydayPrice;
 
 		// then loop through the coinList
 		for (int i = 0; i < Array.getLength(coinList); i++) {
+			
+//			double todayPrice;
+//			double ydayPrice;
 
 			// for each coin, get today's price, store data in combined list
 			today_coinPrice = df.getPriceForCoin(coinList[i], currdate);
-
-			today_combinedList[i][0][0][0] = coinList[i]; // the name
-			today_combinedList[0][i][0][0] = today_coinPrice; // the price
-
-			// for each coin, get yesterday's price, store data in combined list
 			yday_coinPrice = df.getPriceForCoin(coinList[i], yesterday);
 
-			yday_combinedList[i][0][0][0] = coinList[i]; // the name
-			yday_combinedList[0][i][0][0] = yday_coinPrice; // the price
-		}
-
-		// Compare today's prices (today_combinedList) to yesterday's prices
-		// (yday_combinedList)
-		for (int j = 0; j < Array.getLength(today_combinedList); j++) {
-
-			double todayPrice;
-			double ydayPrice;
-
-			todayPrice = (double) today_combinedList[0][j][0][0];
-			ydayPrice = (double) yday_combinedList[0][j][0][0];
-
+			today_combinedList[i][0] = coinList[i]; // the name
+			yday_combinedList[i][0] = coinList[i]; // the name
+			
+			
+			today_combinedList[i][1] = today_coinPrice;
+			yday_combinedList[i][1] = yday_coinPrice;
+			
+			
+			todayPrice = (double) today_combinedList[i][1];
+			ydayPrice = (double) yday_combinedList[i][1];
+			
+			
 			// If today's price is less, execute strategy
-			if (todayPrice < ydayPrice) {
-				System.out.println("Performing Strategy A on " + today_combinedList[j][0]);
+				if (todayPrice < ydayPrice) {
+					System.out.println("Performing Strategy A on " + today_combinedList[i][0]);
 
-				// Action is to buy
-				today_combinedList[0][0][j][0] = "Buy";
+					// Action is to buy
+					today_combinedList[i][2] = "Buy";
 
-				// Increase the quantity by 100
-				quantity += 100;
-				today_combinedList[0][0][0][j] = quantity;
+					// Increase the quantity by 100
+//					int quantity += 100;
+					today_combinedList[i][3] = quantity;
 
-			} else {
-				today_combinedList[0][0][j][0] = "Nothing";
-			}
-
+				} else {
+					today_combinedList[i][2] = "Hold";		// Hold from doing anything
+				}
+			
 		}
+		
+		TradeResult tr = new TradeResult();
+		
+		tr.trade(numRows, today_combinedList);
+		
 
 		// Shouldn't be null
 		// should return ummm? all coins that have been bought? aka qty > 0?
-		return null;
+		return tr;
 	}
 
 }
