@@ -35,6 +35,14 @@ public class StrategyC extends StrategyInterface{
 						"bsv", "hbtc", "qnt", "ksm", "kcs", "ht", "dash", "juno"};
 		List<String> inCoinList = new ArrayList<>(Arrays.asList(inCoinArray));
 		
+		for ( String i : coinList) {
+			if ( inCoinList.contains(i) == false ) {
+				System.out.println("Fail transaction due to invalid cryptocoin.");
+				status = false;
+				return null;
+			}
+		}
+		
 		double[] CoinRatio = new double[numOfCoins]; // ratio for buy/sell quantity
 		double sumOfRevCRatio = 0;	//sum of reversed ratio
 		double[] finRatio = new double[numOfCoins];		//final ratio for buy/sell
@@ -92,8 +100,19 @@ public class StrategyC extends StrategyInterface{
 			
 		}
 		
+		Object[][] result = new Object[numOfCoins][4];
+		TradeResult TR = new TradeResult();
+		for (int i = 0; i < numOfCoins; i++) {
+			result[i][0]= coinList[i];
+			result[i][1]= coinPriceList[i];
+			result[i][2]= action[i];
+			result[i][3]= finQty[i];
+		}
 		
-		return null;
+		TR.trade(numOfCoins, result);
+		
+		
+		return TR;
 	}
 	
 }
