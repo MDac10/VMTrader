@@ -18,7 +18,6 @@ public class StrategyC extends StrategyInterface{
 	public TradeResult trade(String[] coinList, double[] coinPriceList) {
 		
 		int numOfCoins = coinList.length;
-		boolean status;  //whether the transaction succeeded
 		/**final String[] inCoinArray = new String[] 
 				{ "btc", "eth", "bnb", "sol", "luna", "avax", "dot", "wbtc",
 						"steth", "near", "atom", "ltc", "link", "bch", "ftt", 
@@ -35,7 +34,7 @@ public class StrategyC extends StrategyInterface{
 			}
 		}
 		
-		String[] finCoinList = (String[]) inCoinList.toArray();
+		Object[] finCoinList = inCoinList.toArray();
 		
 //		for ( String i : coinList) {
 //			if ( finCoinList.contains(i) == false ) {
@@ -44,6 +43,16 @@ public class StrategyC extends StrategyInterface{
 //				return null;
 //			}
 //		}
+		
+		int[] status = new int[numOfCoins];  //whether the transaction succeeded, 0 = failed
+		
+		for (int i = 0; i < numOfCoins; i++) {
+			for (int j = 0; j < inCoinList.size(); j++) {
+				if (inCoinList.get(j) == coinList[i]) {
+					status[i] = 1;
+				}
+			}
+		}
 		
 		double[] CoinRatio = new double[numOfCoins]; // ratio for buy/sell quantity
 		int[] finQty = new int[numOfCoins]; // final quantity for each coin
@@ -100,10 +109,21 @@ public class StrategyC extends StrategyInterface{
 		Object[][] result = new Object[numOfCoins][4];
 		TradeResult TR = new TradeResult();
 		for (int i = 0; i < numOfCoins; i++) {
-			result[i][0]= coinList[i];
-			result[i][1]= coinPriceList[i];
-			result[i][2]= action[i];
-			result[i][3]= finQty[i];
+			if (status[i] == 1) {
+				result[i][0]= coinList[i];
+				result[i][1]= coinPriceList[i];
+				result[i][2]= action[i];
+				result[i][3]= finQty[i];
+			}
+			
+			else
+			{
+				result[i][0]= coinList[i];
+				result[i][1]= null;
+				result[i][2]= "Failed (Invalid Coin)";
+				result[i][3]= null;
+			}
+			
 		}
 		
 		TR.trade(numOfCoins, result);
