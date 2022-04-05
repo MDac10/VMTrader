@@ -12,13 +12,6 @@ import com.google.gson.JsonObject;
 
 public class StrategyC extends StrategyInterface{
 
-	public String getIDbySymbol(String Symbol) {
-		
-		AvailableCryptoList AC = new AvailableCryptoList();
-		String id;
-		id = AC.getCryptoID(Symbol);
-		return id;
-	}
 	//you will get the action necessary for each coin from strategy D
 	//"Play Large" Strategy, all prices Over 10CAD, the costlier the coin is, the more you buy / sell
 	@Override
@@ -26,14 +19,23 @@ public class StrategyC extends StrategyInterface{
 		
 		int numOfCoins = coinList.length;
 		boolean status;  //whether the transaction succeeded
-		final String[] inCoinArray = new String[] 
+		/**final String[] inCoinArray = new String[] 
 				{ "btc", "eth", "bnb", "sol", "luna", "avax", "dot", "wbtc",
 						"steth", "near", "atom", "ltc", "link", "bch", "ftt", 
 						"etc", "okb", "uni", "axs", "icp", "fil", "egld", 
 						"waves", "xmr", "ceth", "ape", "rune", "aave", "cake", 
 						"osmo", "hnt", "zec", "mkr", "cvx", "fxs", "ar", "neo",
-						"bsv", "hbtc", "qnt", "ksm", "kcs", "ht", "dash", "juno"};
-		List<String> inCoinList = new ArrayList<>(Arrays.asList(inCoinArray));
+						"bsv", "hbtc", "qnt", "ksm", "kcs", "ht", "dash", "juno"};**/
+		AvailableCryptoList ACL = new AvailableCryptoList();
+		List<String> inCoinList = new ArrayList<>();
+		String[] avaID = ACL.getAvailableCryptosID();
+		for (String x : avaID) {
+			if ((Double.parseDouble(ACL.getCurPrice(x))) >= 10) {
+				inCoinList.add(x);
+			}
+		}
+		
+		Object[] finCoinList = inCoinList.toArray();
 		
 		for ( String i : coinList) {
 			if ( inCoinList.contains(i) == false ) {
@@ -75,12 +77,9 @@ public class StrategyC extends StrategyInterface{
 			finQty[i] = (int) Math.ceil(totalQty * CoinRatio[i]);
 		}
 		
-		for (int i = 0; i < numOfCoins; i++) {
-			coinIDList[i] = getIDbySymbol(coinList[i]); //rmb to lower case the symbol 
-		}
 		
 		for (int i = 0; i < numOfCoins; i++) {
-			prevPrices[i] = DF.getPriceForCoin(coinIDList[i], ytd);
+			prevPrices[i] = DF.getPriceForCoin(coinList[i], ytd);
 			
 		}
 		
