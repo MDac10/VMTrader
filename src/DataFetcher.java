@@ -54,6 +54,7 @@ public class DataFetcher {
 			JsonObject marketData = jsonObject.get("market_data").getAsJsonObject();
 			JsonObject currentPrice = marketData.get("current_price").getAsJsonObject();
 			price = currentPrice.get("cad").getAsDouble();
+			price = Math.round(price * 100.0) / 100.0;
 		}
 		
 		return price;
