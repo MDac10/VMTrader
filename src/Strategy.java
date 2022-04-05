@@ -1,5 +1,5 @@
 /**
- * @author Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hong Ching Ingrid
+ * @author Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hoi Ching Ingrid
  * @course 2212
  * Strategy class handles each of the strategies for each broker**/
 package cryptoTrader.utils;
