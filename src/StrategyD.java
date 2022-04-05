@@ -12,14 +12,6 @@ import com.google.gson.JsonObject;
 
 public class StrategyD extends StrategyInterface{
 	
-	public String getIDbySymbol(String Symbol) {
-		
-		AvailableCryptoList AC = new AvailableCryptoList();
-		String id;
-		id = AC.getCryptoID(Symbol);
-		return id;
-	}
-
 	//you will get the action necessary for each coin from strategy D
 	//"Play Small" Strategy, all prices under 10CAD
 	@Override
@@ -27,15 +19,27 @@ public class StrategyD extends StrategyInterface{
 		
 		int numOfCoins = coinList.length;
 		boolean status;  //whether the transaction succeeded
-		final String[] inCoinArray = new String[] 
-				{ "usdt", "usdc", "xrp", "ada", "doge", "busd", "ust", "shib", "cro", "matic",
-						"dai", "trx", "algo", "xlm", "leo", "vet", "hbar", "sand", "mana", 
-						"ftm", "theta", "xtz", "grt", "klay", "eos", "mim", "frax", "flow", 
-						"miota", "dfi", "zil", "xec", "btt", "gala", "one", "cdai", "tfuel", 
-						"cusdc", "celo", "enj", "stx", "snx", "xrd", "chz", "nexo", "lrc", 
-						"gmt", "tusd", "amp", "cel", "ldo", "bat", "heart", "mina", "kda"};
 		
-		List<String> inCoinList = new ArrayList<>(Arrays.asList(inCoinArray));
+		AvailableCryptoList ACL = new AvailableCryptoList();
+		List<String> inCoinList = new ArrayList<>();
+		String[] avaID = ACL.getAvailableCryptosID();
+		for (String x : avaID) {
+			if ((Double.parseDouble(ACL.getCurPrice(x))) < 10) {
+				inCoinList.add(x);
+			}
+		}
+		
+		Object[] finCoinList = inCoinList.toArray();
+		/**final String[] inCoinArray = new String[] 
+			{"tether", "usd-coin", "ripple", "cardano", "dogecoin", "binance-usd", "terrausd", "shiba-inu", 
+			"crypto-com-chain", "matic-network", "dai", "tron", "algorand", "stellar", "leo-token", "vechain",
+			"hedera-hashgraph", "the-sandbox", "decentraland", "fantom", "theta-token", "tezos", "the-graph",
+			"klay-token", "eos", "magic-internet-money", "frax", "flow", "iota", "defichain", "zilliqa", "ecash",
+			"bittorrent", "gala", "harmony", "cdai", "theta-fuel", "compound-usd-coin", "celo", "enjincoin", 
+			"blockstack", "havven", "radix", "chiliz", "nexo", "loopring", "stepn", "true-usd", "amp-token", 
+			"celsius-degree-token", "lido-dao","basic-attention-token", "humans-ai", "mina-protocol", "kadena"};
+		**/
+		//List<String> inCoinList = new ArrayList<>(Arrays.asList(inCoinArray));
 		
 		for ( String i : coinList) {
 			if ( inCoinList.contains(i) == false ) {
@@ -66,32 +70,34 @@ public class StrategyD extends StrategyInterface{
 		int totalQty = 1500;
 		int sum = 0;	//sum of all coin prices
 		
-		for ( double p : coinPriceList ) {
-			sum += p;
+		for ( int i = 0; i < numOfCoins; i++ ) {
+			sum += coinPriceList[i];
+			System.out.println("Sum: " + coinPriceList[i]);
 		}
 		
 		for (int i = 0; i < numOfCoins; i++) {
 			reverseCoinRatio[i] = 1/(coinPriceList[i]/sum);	
+			System.out.println("revCR: " + reverseCoinRatio[i]);
 		}
 		
 		for (double c : reverseCoinRatio) {
 			sumOfRevCRatio += c;
+			System.out.println("sumR: " + c);
 		}
 		
 		for (int i = 0; i < numOfCoins; i++) {
 			finRatio[i] = (reverseCoinRatio[i]/sumOfRevCRatio);
+			System.out.println("sfinR: " + finRatio[i] );
 		}
 		
 		for (int i = 0; i < numOfCoins; i++) {
 			finQty[i] = (int) Math.ceil(totalQty * finRatio[i]);
+			System.out.println("price: " + finQty[i]);
 		}
 		
-		for (int i = 0; i < numOfCoins; i++) {
-			coinIDList[i] = getIDbySymbol(coinList[i]); //rmb to lower case the symbol 
-		}
 		
 		for (int i = 0; i < numOfCoins; i++) {
-			prevPrices[i] = DF.getPriceForCoin(coinIDList[i], ytd);
+			prevPrices[i] = DF.getPriceForCoin((String) finCoinList[i], ytd);
 			
 		}
 		
