@@ -98,7 +98,7 @@ public class StrategyB extends StrategyInterface {
 				today_combinedList[i][3] = quantity;
 
 			} else {
-				today_combinedList[i][2] = "Hold";		// Hold from doing anything
+				today_combinedList[i][2] = "Trade failed";		// Hold from doing anything
 				today_combinedList[i][3] = quantity;
 			}
 			
