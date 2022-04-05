@@ -1,5 +1,5 @@
 /**
- * @author Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hong Ching Ingrid
+ * @author Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hoi Ching Ingrid
  * Class DateFormat is meant to format the date when the user selects a calendar date in the MainUI**/
 package cryptoTrader.utils;
 
