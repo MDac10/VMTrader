@@ -1,119 +1,114 @@
+/**
+ * @author Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hong Ching Ingrid
+ * @course 2212package cryptoTrader.utils;
+**/
+
+package cryptoTrader.utils;
+
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Scanner;
-import java.util.Vector;
-import cryptoTrader.gui.NewUI;
-import java.lang.reflect.Array;
 
+/**
+ * Strategy B: if specific coin is HIGHER than it was yesterday, sell 100 quantity
+ */
 
 public class StrategyB extends StrategyInterface {
 
-    /*
-     * Setting up date (to be used later)
-     */
+	/**
+	 * Setting up date (to be used later)
+	 */
+	private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
+	private String currdate = dateformat.format(new Date());
+	private int numRows;
 
-    private SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
-    private String currdate = dateformat.format(new Date());
-    private int numRows;
+	/**
+	 * Using a 2D array with 4 columns, we still store the following parameters
+	 * 
+	 * column 0: Name column 1: Price column 2: Action on coin column 3: Quantity of
+	 * coin
+	 * 
+	 * Name and price will be taken from coinlist and coinPriceList, respectively
+	 * Action will be either buy, or nothing Quantity of the coin will increase in
+	 * increments of 100
+	 */
+	public TradeResult trade(String[] coinList, double[] coinPriceList) throws ParseException {
 
-    /*
-     * Getting the action necessary for each coin from strategy B
-     */
+		String yesterday;
+		numRows = coinList.length;
 
-    @Override
-    public TradeResult trade(String[] coinList, double[] prices) {
-        Object traderName;
-        Scanner reader = null;
-        numRows = coinList.length;
-        int quantity = 100;
-        double today_coinPrice;
+		int quantity = 0;
 
-        Object[][] today_combinedList = new Object[coinList.length][4];
+		/** store prices for today (coinPrice) and yesterday (oldCoinPrice) **/
+		
+		double today_coinPrice;
+		double yday_coinPrice;
 
-        DataFetcher df = new DataFetcher();
-        Date date = dateformat.parse(currdate);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        Date newdate = cal.getTime();
+		Object[][] today_combinedList = new Object[coinList.length][4];
+		Object[][] yday_combinedList = new Object[coinList.length][4];
 
-        /*
-         *For each coin, get today's price, store data in combined list
-         */
+		DataFetcher df = new DataFetcher();
 
-        today_coinPrice = df.getPriceForCoin(coinList[i], currdate);
-        today_combinedList[i][0] = coinList[i]; // the name
-        today_combinedList[i][1] = today_coinPrice;
-        double todayPrice;
-        todayPrice = (double) today_combinedList[i][1];
+		Date date = dateformat.parse(currdate);
 
-        System.out.println("Strategy A");
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
 
+		Date newdate = cal.getTime();
+		cal.add(Calendar.DATE, -1); // decrement the date
+		yesterday = dateformat.format(newdate);
+		
+		double todayPrice;
+		double ydayPrice;
 
-        /* Looping through the coinList */
+		/** Loop through the coinList **/
+		
+		for (int i = 0; i < Array.getLength(coinList); i++) {
+			
 
-        for (int i = 0; i < Array.getLength(coinList); i++) {
+			/** For each coin, get today's price, store data in combined list **/
+			
+			today_coinPrice = df.getPriceForCoin(coinList[i], currdate);
+			yday_coinPrice = df.getPriceForCoin(coinList[i], yesterday);
 
+			today_combinedList[i][0] = coinList[i]; // the name
+			yday_combinedList[i][0] = coinList[i]; // the name
+			
+			
+			today_combinedList[i][1] = today_coinPrice;
+			yday_combinedList[i][1] = yday_coinPrice;
+			
+			
+			todayPrice = (double) today_combinedList[i][1];
+			ydayPrice = (double) yday_combinedList[i][1];
+			
+			
+			/** If today's price is less, execute strategy **/
+			
+			if (todayPrice > ydayPrice) {
+				System.out.println("Performing Strategy A on " + today_combinedList[i][0]);
 
-            /* Creating Strategy B */
+				/** Action is to buy **/
+				today_combinedList[i][2] = "Sell";
 
-            System.out.println("Strategy B:");
+				/** Decrease the quantity by 100 **/
+				quantity = -100;
+				today_combinedList[i][3] = quantity;
 
-            /* Making Trader select a Crypto Coin */
+			} else {
+				today_combinedList[i][2] = "Hold";		// Hold from doing anything
+				today_combinedList[i][3] = quantity;
+			}
+			
+		}
+		
+		TradeResult tr = new TradeResult();
+		
+		tr.trade(numRows, today_combinedList);
+		
+		return tr;
+	}
 
-            System.out.println("Select Crypto Coin: ");
-            double selectCrypto = reader.nextDouble();
-            String strSelect = Double.toString(selectCrypto);
-
-            String searchedValue = strSelect;
-
-            /* Searching if desired Crypto is in coinList */
-
-            for (String x: coinList) {
-                if (x == searchedValue) {
-                    boolean found = true;
-                    break;
-                }
-            }
-
-
-            /* Finding the minimum and maximum price of coinList */
-
-            Arrays.sort(prices);
-            double priceMinimum = prices[0];
-            double priceMaximum = prices[prices.length - 1];
-
-            /* Trader selects their own Crypto price minimum */
-
-            System.out.println("Select Lowest Crypto Price Limit: ");
-            double lowestPriceLim = reader.nextDouble();
-
-            if (lowestPriceLim >= priceMinimum) {
-                boolean found = true;
-            }
-
-            /* Trader selects their own Crypto price maximum */
-
-            System.out.println("Select Highest Crypto Price Limit: ");
-            double highestPriceLim = reader.nextDouble();
-
-            if (highestPriceLim <= priceMaximum) {
-                boolean found = true;
-            }
-
-
-            // TODO Auto-generated method stub
-            TradeResult tr = new TradeResult();
-
-            tr.trade(numRows, today_combinedList);
-            return tr;
-        }
-    }
 }
