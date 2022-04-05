@@ -1,7 +1,7 @@
 # VMTrader
 CS2212 final project.
 
-Submitted by: Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hong Ching Ingrid
+Submitted by: Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hoi Ching Ingrid
 
 ## Project Description
   The source (src) folder holds all the files dedicated to this project however they are divided into gui and utils folder when implemented.
