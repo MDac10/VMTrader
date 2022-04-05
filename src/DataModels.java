@@ -1,5 +1,5 @@
 /**
- * @author Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hong Ching Ingrid**/
+ * @author Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hoi Ching Ingrid**/
 package cryptoTrader.utils;
 
 import java.awt.Color;
