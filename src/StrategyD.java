@@ -13,13 +13,12 @@ import com.google.gson.JsonObject;
 public class StrategyD extends StrategyInterface{
 	
 	//you will get the action necessary for each coin from strategy D
-	//"Play Small" Strategy, all prices under 10CAD, the cheaper the coin is, the more you buy / sell.	
-	//You sell if the trend is decreasing, you buy otherwise.
+	//"Play Small" Strategy, all prices under 10CAD
 	@Override
 	public TradeResult trade(String[] coinList, double[] coinPriceList) {
 		
 		int numOfCoins = coinList.length;
-		boolean status;  //whether the transaction succeeded
+		
 		
 		AvailableCryptoList ACL = new AvailableCryptoList();
 		List<String> inCoinList = new ArrayList<>();
@@ -50,12 +49,24 @@ public class StrategyD extends StrategyInterface{
 //			}
 //		}
 		
+		int[] status = new int[numOfCoins];  //whether the transaction succeeded, 0 = failed
+		
+		for (int i = 0; i < numOfCoins; i++) {
+			for (int j = 0; j < inCoinList.size(); j++) {
+				if (inCoinList.get(j) == coinList[i]) {
+					status[i] = 1;
+				}
+			}
+		}
+		
+		
 		double[] reverseCoinRatio = new double[numOfCoins]; // reversed ratio for buy/sell quantity
 		double sumOfRevCRatio = 0;	//sum of reversed ratio
 		double[] finRatio = new double[numOfCoins];		//final ratio for buy/sell
 		int[] finQty = new int[numOfCoins]; // final quantity for each coin
 		String[] action = new String[numOfCoins]; // buy, sell,  hold
 		double[] trend = new double[numOfCoins];	//slope of trends of coins
+		
 		
 		String[] coinIDList = new String[numOfCoins];
 		double[] prevPrices = new double[numOfCoins];
@@ -119,10 +130,21 @@ public class StrategyD extends StrategyInterface{
 		Object[][] result = new Object[numOfCoins][4];
 		TradeResult TR = new TradeResult();
 		for (int i = 0; i < numOfCoins; i++) {
-			result[i][0]= coinList[i];
-			result[i][1]= coinPriceList[i];
-			result[i][2]= action[i];
-			result[i][3]= finQty[i];
+			if (status[i] == 1) {
+				result[i][0]= coinList[i];
+				result[i][1]= coinPriceList[i];
+				result[i][2]= action[i];
+				result[i][3]= finQty[i];
+			}
+			
+			else
+			{
+				result[i][0]= coinList[i];
+				result[i][1]= null;
+				result[i][2]= "Failed";
+				result[i][3]= null;
+			}
+			
 		}
 		
 		TR.trade(numOfCoins, result);
