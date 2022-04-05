@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,10 @@ import com.google.gson.JsonParser;
 public class AvailableCryptoList {
 	private static AvailableCryptoList instance = null;
 	
-	private Map<String, String> availableCryptosMap = new HashMap<>();
-	private List<String> availableCryptosList = new ArrayList<>();
+	private static Map<String, String> availableCryptosMap = new HashMap<>();
+	private static List<String> availableCryptosList = new ArrayList<>();
+	private static List<String> availableCryptosID = new ArrayList<>();
+	private static Map<String, String> availableCryptosPriceMap = new HashMap<>();
 	
 	public static AvailableCryptoList getInstance() {
 		if (instance == null)
@@ -52,11 +55,11 @@ public class AvailableCryptoList {
 				String name, id, symbol;
 				for (int i = 0; i < size; i++) {
 					JsonObject object = jsonArray.get(i).getAsJsonObject();
-					name = object.get("name").getAsString();
 					id = object.get("id").getAsString();
+					name = object.get("name").getAsString();
 					symbol = object.get("symbol").getAsString();
 					availableCryptosMap.put(symbol, id);
-					availableCryptosList.add(name);
+					availableCryptosList.add(symbol);
 				}
 			}
 
@@ -65,11 +68,11 @@ public class AvailableCryptoList {
 		}
 	}
 	
-	private void findAvailableCryptos() {
+	private static void findAvailableCryptos() {
 
 		String urlString = 
 				"https://api.coingecko.com/api/v3/coins/markets" + 
-						"?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false";
+						"?vs_currency=cad&order=market_cap_desc&per_page=100&page=1&sparkline=false";
 //		ALPHAVANTAGE API KEY = VNEY4VV2AWF1EB51
 		try {
 			URL url = new URL(urlString);
@@ -87,14 +90,17 @@ public class AvailableCryptoList {
 				JsonArray jsonArray = new JsonParser().parse(inline).getAsJsonArray();
 				int size = jsonArray.size();
 				
-				String name, id, symbol;
+				String name, id, symbol, curPrice;
 				for (int i = 0; i < size; i++) {
 					JsonObject object = jsonArray.get(i).getAsJsonObject();
 					//name = object.get("name").getAsString();
+					curPrice = object.get("current_price").getAsString();
 					id = object.get("id").getAsString();
 					symbol = object.get("symbol").getAsString();
 					availableCryptosMap.put(symbol, id);
 					availableCryptosList.add(symbol);
+					availableCryptosID.add(id);
+					availableCryptosPriceMap.put(id,curPrice);
 				}
 			}
 
@@ -107,8 +113,15 @@ public class AvailableCryptoList {
 		return availableCryptosList.toArray(new String[availableCryptosList.size()]);
 	}
 	
+	public String[] getAvailableCryptosID() {
+		return availableCryptosID.toArray(new String[availableCryptosID.size()]);
+	}
+	
 	public String getCryptoID(String cryptoName) {
 		return availableCryptosMap.get(cryptoName);
+	}
+	public String getCurPrice(String cryptoID) {
+		return availableCryptosPriceMap.get(cryptoID);
 	}
 
 }
