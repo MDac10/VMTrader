@@ -82,7 +82,7 @@ public class StrategyA extends StrategyInterface {
 		cal.add(Calendar.DATE, -1); // decrement the date
 		yesterday = dateformat.format(newdate);
 
-		System.out.println("Strategy A");
+		//System.out.println("Strategy A");
 
 		/*
 		 * Loop through coin list to populate the combined lists
@@ -115,7 +115,7 @@ public class StrategyA extends StrategyInterface {
 			 * Else, do nothing on the coin of interest
 			 */
 			if (todayPrice < ydayPrice) {
-				System.out.println("Performing Strategy A on " + today_combinedList[i][0]);
+				//System.out.println("Performing Strategy A on " + today_combinedList[i][0]);
 
 				today_combinedList[i][2] = "Buy";
 				today_combinedList[i][3] = quantity;

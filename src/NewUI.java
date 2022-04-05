@@ -1,7 +1,3 @@
-/**
- * @author Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hong Ching Ingrid
- */
-
 package cryptoTrader.gui;
 
 import java.awt.BorderLayout;

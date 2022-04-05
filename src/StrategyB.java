@@ -27,10 +27,8 @@ public class StrategyB extends StrategyInterface {
 	/**
 	 * Using a 2D array with 4 columns, we still store the following parameters
 	 * 
-	 * column 0: Name 
-	 * column 1: Price 
-	 * column 2: Action on coin 
-	 * column 3: Quantity of coin
+	 * column 0: Name column 1: Price column 2: Action on coin column 3: Quantity of
+	 * coin
 	 * 
 	 * Name and price will be taken from coinlist and coinPriceList, respectively
 	 * Action will be either buy, or nothing Quantity of the coin will increase in
@@ -90,7 +88,7 @@ public class StrategyB extends StrategyInterface {
 			/** If today's price is less, execute strategy **/
 			
 			if (todayPrice > ydayPrice) {
-				System.out.println("Performing Strategy B on " + today_combinedList[i][0]);
+				//System.out.println("Performing Strategy A on " + today_combinedList[i][0]);
 
 				/** Action is to buy **/
 				today_combinedList[i][2] = "Sell";

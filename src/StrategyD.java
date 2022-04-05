@@ -41,13 +41,13 @@ public class StrategyD extends StrategyInterface{
 		**/
 		//List<String> inCoinList = new ArrayList<>(Arrays.asList(inCoinArray));
 		
-		for ( String i : coinList) {
-			if ( inCoinList.contains(i) == false ) {
-				System.out.println("Fail transaction due to invalid cryptocoin.");
-				status = false;
-				return null;
-			}
-		}
+//		for ( String i : coinList) {
+//			if ( inCoinList.contains(i) == false ) {
+//				System.out.println("Fail transaction due to invalid cryptocoin.");
+//				status = false;
+//				return null;
+//			}
+//		}
 		
 		double[] reverseCoinRatio = new double[numOfCoins]; // reversed ratio for buy/sell quantity
 		double sumOfRevCRatio = 0;	//sum of reversed ratio

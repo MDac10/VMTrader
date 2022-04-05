@@ -35,15 +35,15 @@ public class StrategyC extends StrategyInterface{
 			}
 		}
 		
-		Object[] finCoinList = inCoinList.toArray();
+		String[] finCoinList = (String[]) inCoinList.toArray();
 		
-		for ( String i : coinList) {
-			if ( inCoinList.contains(i) == false ) {
-				System.out.println("Fail transaction due to invalid cryptocoin.");
-				status = false;
-				return null;
-			}
-		}
+//		for ( String i : coinList) {
+//			if ( finCoinList.contains(i) == false ) {
+//				System.out.println("Fail transaction due to invalid cryptocoin.");
+//				status = false;
+//				return null;
+//			}
+//		}
 		
 		double[] CoinRatio = new double[numOfCoins]; // ratio for buy/sell quantity
 		int[] finQty = new int[numOfCoins]; // final quantity for each coin
@@ -113,4 +113,3 @@ public class StrategyC extends StrategyInterface{
 	}
 	
 }
-

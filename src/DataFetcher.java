@@ -1,7 +1,3 @@
-/**
- * @author Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hong Ching Ingrid
- */
-
 package cryptoTrader.utils;
 
 import java.io.IOException;
@@ -42,7 +38,7 @@ public class DataFetcher {
 
 		} catch (IOException e) {
 			System.out.println("Something went wrong with the API call. " + e);
-		}
+		} 
 		return null;
 	}
 	
@@ -54,7 +50,6 @@ public class DataFetcher {
 			JsonObject marketData = jsonObject.get("market_data").getAsJsonObject();
 			JsonObject currentPrice = marketData.get("current_price").getAsJsonObject();
 			price = currentPrice.get("cad").getAsDouble();
-			price = Math.round(price * 100.0) / 100.0;
 		}
 		
 		return price;

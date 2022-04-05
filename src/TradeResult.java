@@ -1,7 +1,3 @@
-/**
- * @author Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hong Ching Ingrid
- */
-
 package cryptoTrader.utils;
 
 /**Data structure to hold the data necessary for graphs**/
