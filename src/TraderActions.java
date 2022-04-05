@@ -1,5 +1,5 @@
 /**
- * @author Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hong Ching Ingrid
+ * @author Megan Da Costa, Vito Wong, Xiaoyun Bonato, Sin Hoi Ching Ingrid
  * TraderActions class conducts the organization of data for each trader**/
 package cryptoTrader.utils;
 
