@@ -13,7 +13,8 @@ import com.google.gson.JsonObject;
 public class StrategyD extends StrategyInterface{
 	
 	//you will get the action necessary for each coin from strategy D
-	//"Play Small" Strategy, all prices under 10CAD
+	//"Play Small" Strategy, all prices under 10CAD, the cheaper the coin is, the more you buy / sell.	
+	//You sell if the trend is decreasing, you buy otherwise.
 	@Override
 	public TradeResult trade(String[] coinList, double[] coinPriceList) {
 		
