@@ -11,7 +11,7 @@ Hence the additon of package sources at the beginning of each file.
 
   When user first uses the platform the LoginUI will run. If an incorrect combination of a username and a password is input and the user clicks "Submit", an error window will appear and when the user selecrs "Ok" the window will close and they will have to run the program again.
 
-  Any of the combinations in the logins.txt file will allow the user to successfully log into the trading platform. For example if the user puts "user1" as username and "1234" as password, a "login successful" window will pop up. When "Ok" is selected teh trading platform should open up.
+  Any of the combinations in the logins.txt file will allow the user to successfully log into the trading platform. For example if the user puts "user1" as username and "1234" as password, a "login successful" window will pop up. When "Ok" is selected the trading platform should open up.
 
   On the trading platform, to the right is the window where the user can input a broker name, the list of cryptocoins of interest, the strategy of choice, and if they wish, the date to look at. If date is not selected or is selected out of bounds (a day in the future) the date that will be used is the current date.
 
